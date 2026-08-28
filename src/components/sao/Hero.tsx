@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowRight, PackageSearch } from "lucide-react";
 import heroImg from "@/assets/hero-airport.jpg";
 
@@ -42,20 +41,18 @@ export function Hero() {
         </div>
 
         <div className="reveal-right mt-8 flex flex-wrap gap-4" style={{ animationDelay: "0.14s" }}>
-          <Link
-            to="/"
-            hash="services"
+          <a
+            href="#services"
             className="inline-flex items-center gap-2 rounded-full bg-sao-navy px-7 py-4 text-sm font-semibold tracking-wide text-primary-foreground transition-[filter] duration-200 hover:brightness-125"
           >
             EXPLORER LES SERVICES <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/"
-            hash="suivi"
+          </a>
+          <a
+            href="#suivi"
             className="inline-flex items-center gap-2 rounded-full border border-sao-navy/30 bg-background/40 px-7 py-4 text-sm font-semibold tracking-wide text-sao-navy backdrop-blur transition-colors duration-200 hover:bg-sao-gold hover:text-sao-navy"
           >
             SUIVRE MON ENVOI <PackageSearch className="size-4" aria-hidden="true" />
-          </Link>
+          </a>
         </div>
       </div>
     </section>

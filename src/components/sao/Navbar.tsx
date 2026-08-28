@@ -4,14 +4,14 @@ import { useState } from "react";
 import logo from "@/assets/sao-logo.png.asset.json";
 
 const LINKS = [
-  { label: "ACCUEIL", to: "/" },
-  { label: "VOLS", to: "/", hash: "moteur" },
-  { label: "SERVICES", to: "/", hash: "services" },
-  { label: "DESTINATIONS", to: "/", hash: "destinations" },
-  { label: "SUIVI", to: "/", hash: "suivi" },
-  { label: "SAO MONEY", to: "/", hash: "sao-money" },
-  { label: "À PROPOS", to: "/", hash: "adn" },
-  { label: "CONTACT", to: "/", hash: "contact" },
+  { label: "ACCUEIL", href: "/" },
+  { label: "VOLS", href: "/#moteur" },
+  { label: "SERVICES", href: "/#services" },
+  { label: "DESTINATIONS", href: "/#destinations" },
+  { label: "SUIVI", href: "/#suivi" },
+  { label: "SAO MONEY", href: "/#sao-money" },
+  { label: "À PROPOS", href: "/#adn" },
+  { label: "CONTACT", href: "/#contact" },
 ];
 
 export function Navbar() {
@@ -32,14 +32,13 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-6 xl:flex">
           {LINKS.map((l) => (
-            <Link
+            <a
               key={l.label}
-              to={l.to}
-              hash={l.hash}
+              href={l.href}
               className="nav-link-underline text-[13px] font-semibold tracking-wide text-sao-navy"
             >
               {l.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
@@ -87,14 +86,13 @@ export function Navbar() {
             <ul className="flex flex-col gap-3">
               {LINKS.map((l) => (
                 <li key={l.label}>
-                  <Link
-                    to={l.to}
-                    hash={l.hash}
+                  <a
+                    href={l.href}
                     onClick={() => setOpen(false)}
                     className="block text-[28px] leading-8 font-semibold tracking-[-0.84px] text-sao-navy"
                   >
                     {l.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
