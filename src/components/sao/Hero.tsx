@@ -11,7 +11,7 @@ export function Hero() {
         height={1088}
         className="absolute inset-0 size-full object-cover"
       />
-      <div className="absolute inset-0 bg-background/55 md:bg-gradient-to-r md:from-background/90 md:via-background/70 md:to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/10 md:bg-gradient-to-r md:from-background md:via-background/70 md:to-transparent" />
       <div
         className="absolute inset-0"
         style={{ background: "var(--scrim-hero)" }}

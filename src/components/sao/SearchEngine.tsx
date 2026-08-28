@@ -12,8 +12,8 @@ const TABS: { id: string; label: string; icon: typeof Plane; fields: Field[] }[]
     fields: [
       { label: "Origine", placeholder: "N'Djamena (NDJ)" },
       { label: "Destination", placeholder: "Paris (CDG)" },
-      { label: "Aller", placeholder: "28 Avr. 2026", type: "date" },
-      { label: "Retour", placeholder: "05 Mai 2026", type: "date" },
+      { label: "Aller", placeholder: "28 Avr. 2026",  },
+      { label: "Retour", placeholder: "05 Mai 2026",  },
       { label: "Passagers", placeholder: "1 passager" },
       { label: "Classe", placeholder: "Économique" },
     ],
@@ -65,7 +65,7 @@ const TABS: { id: string; label: string; icon: typeof Plane; fields: Field[] }[]
     fields: [
       { label: "Origine", placeholder: "N'Djamena" },
       { label: "Destination", placeholder: "Moundou" },
-      { label: "Date", placeholder: "28 Avr. 2026", type: "date" },
+      { label: "Date", placeholder: "28 Avr. 2026",  },
       { label: "Passagers", placeholder: "2", type: "number" },
     ],
   },
