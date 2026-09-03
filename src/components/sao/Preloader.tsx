@@ -9,7 +9,7 @@ export function Preloader() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      document.documentElement.dataset.saoReady = "true";
+      document.documentElement.dataset['saoReady'] = "true";
       setGone(true);
       return;
     }
@@ -22,7 +22,7 @@ export function Preloader() {
         window.clearInterval(tick);
         window.setTimeout(() => setLifting(true), 260);
         window.setTimeout(() => {
-          document.documentElement.dataset.saoReady = "true";
+          document.documentElement.dataset['saoReady'] = "true";
           setGone(true);
         }, 1180);
       }
