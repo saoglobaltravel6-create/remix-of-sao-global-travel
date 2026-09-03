@@ -1,4 +1,5 @@
 import { ArrowRight, PackageSearch } from "lucide-react";
+import { SplitText } from "@/components/sao/SplitText";
 import heroImg from "@/assets/hero-airport.jpg";
 
 export function Hero() {
