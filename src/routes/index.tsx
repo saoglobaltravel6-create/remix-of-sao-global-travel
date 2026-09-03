@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/sao/Navbar";
+import { Preloader } from "@/components/sao/Preloader";
+import { ScrollProgress } from "@/components/sao/ScrollProgress";
 import { Hero } from "@/components/sao/Hero";
 import { SearchEngine } from "@/components/sao/SearchEngine";
 import { Services } from "@/components/sao/Services";
@@ -33,7 +35,10 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background">
+      <Preloader />
+      <ScrollProgress />
       <Navbar />
+
       <main>
         <Hero />
         <SearchEngine />

@@ -1,4 +1,5 @@
 import { ArrowRight, PackageSearch } from "lucide-react";
+import { SplitText } from "@/components/sao/SplitText";
 import heroImg from "@/assets/hero-airport.jpg";
 
 export function Hero() {
@@ -19,7 +20,7 @@ export function Hero() {
       />
 
       <div className="sao-container relative z-10 flex min-h-[86svh] flex-col justify-end pb-28 pt-40 md:pb-36">
-        <div className="reveal-up max-w-3xl">
+        <div className="reveal-up max-w-3xl" style={{ animationDelay: "1.25s" }}>
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-sao-navy">
             <span
               className="size-[7px] rounded-full bg-sao-gold shadow-[0_0_10px_var(--sao-gold)]"
@@ -29,18 +30,23 @@ export function Hero() {
             Voyage · Transport · Logistique
           </span>
           <h1 className="mt-5 font-display text-6xl leading-none tracking-tighter text-sao-navy md:text-7xl lg:text-8xl">
-            LE MONDE
-            <span className="-mt-3 block text-sao-gold">COMMENCE ICI.</span>
+            <SplitText text="LE MONDE" delay={1.45} className="block" />
+            <SplitText
+              text="COMMENCE ICI."
+              delay={1.62}
+              className="-mt-3 block text-sao-gold"
+            />
           </h1>
         </div>
 
-        <div className="reveal-right mt-7 max-w-2xl" style={{ animationDelay: "0.06s" }}>
+        <div className="reveal-right mt-7 max-w-2xl" style={{ animationDelay: "2.15s" }}>
           <p className="text-lg text-sao-navy/80 md:text-xl">
             Voyagez, envoyez, transportez et connectez-vous depuis une seule plateforme.
           </p>
         </div>
 
-        <div className="reveal-right mt-8 flex flex-wrap gap-4" style={{ animationDelay: "0.14s" }}>
+        <div className="reveal-right mt-8 flex flex-wrap gap-4" style={{ animationDelay: "2.3s" }}>
+
           <a
             href="#services"
             className="inline-flex items-center gap-2 rounded-full bg-sao-navy px-7 py-4 text-sm font-semibold tracking-wide text-primary-foreground transition-[filter] duration-200 hover:brightness-125"
