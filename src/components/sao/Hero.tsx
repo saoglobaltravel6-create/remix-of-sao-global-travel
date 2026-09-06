@@ -49,12 +49,14 @@ export function Hero() {
 
           <a
             href="#services"
+            data-cursor="DÉCOUVRIR"
             className="inline-flex items-center gap-2 rounded-full bg-sao-navy px-7 py-4 text-sm font-semibold tracking-wide text-primary-foreground transition-[filter] duration-200 hover:brightness-125"
           >
             EXPLORER LES SERVICES <ArrowRight className="size-4" aria-hidden="true" />
           </a>
           <a
             href="#suivi"
+            data-cursor="SUIVRE"
             className="inline-flex items-center gap-2 rounded-full border border-sao-navy/30 bg-background/40 px-7 py-4 text-sm font-semibold tracking-wide text-sao-navy backdrop-blur transition-colors duration-200 hover:bg-sao-gold hover:text-sao-navy"
           >
             SUIVRE MON ENVOI <PackageSearch className="size-4" aria-hidden="true" />
