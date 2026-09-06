@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import logo from "@/assets/sao-logo.png.asset.json";
+import { Marquee } from "@/components/sao/Marquee";
 
 const SERVICES = [
   "Vols",
@@ -18,6 +19,7 @@ const SERVICES = [
 export function Footer() {
   return (
     <footer id="contact" className="bg-sao-navy text-primary-foreground">
+      <Marquee />
       <div className="sao-container grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="inline-flex rounded-2xl bg-background p-3">

@@ -259,3 +259,81 @@
   }
 }
 
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+}
+
+@layer components {
+  .sao-reveal {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+    transition:
+      opacity 700ms var(--ease-soft),
+      transform 700ms var(--ease-spring);
+    will-change: opacity, transform;
+  }
+  .sao-reveal[data-shown="true"] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+  }
+
+  .sao-fade-swap {
+    animation: fadeInSoft 0.45s var(--ease-soft) both;
+  }
+
+  .sao-marquee-track {
+    animation: saoMarquee 32s linear infinite;
+    will-change: transform;
+  }
+  .sao-marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes saoMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Curseur doré : masquer le curseur système uniquement sur desktop pointeur fin */
+@media (hover: hover) and (pointer: fine) and (min-width: 1280px) {
+  html.has-gold-cursor,
+  html.has-gold-cursor a,
+  html.has-gold-cursor button,
+  html.has-gold-cursor [role="button"] {
+    cursor: none;
+  }
+}
+
+/* Allègement mobile : moins de flou/parallaxe, transitions plus courtes */
+@media (max-width: 767px) {
+  .sao-reveal {
+    transform: translate3d(0, 16px, 0);
+    transition-duration: 480ms;
+  }
+  .sao-marquee-track {
+    animation-duration: 24s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .sao-marquee-track {
+    animation: none;
+  }
+  .sao-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
