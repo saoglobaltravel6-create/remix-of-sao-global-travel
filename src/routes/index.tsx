@@ -9,6 +9,8 @@ import { Destinations } from "@/components/sao/Destinations";
 import { TrackingMoney } from "@/components/sao/TrackingMoney";
 import { Adn } from "@/components/sao/Adn";
 import { Footer } from "@/components/sao/Footer";
+import { GoldCursor } from "@/components/sao/GoldCursor";
+import { Reveal } from "@/components/sao/Reveal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,13 +41,15 @@ function Index() {
       <ScrollProgress />
       <Navbar />
 
+      <GoldCursor />
+
       <main>
         <Hero />
-        <SearchEngine />
-        <Services />
+        <Reveal><SearchEngine /></Reveal>
+        <Reveal><Services /></Reveal>
         <Destinations />
-        <TrackingMoney />
-        <Adn />
+        <Reveal><TrackingMoney /></Reveal>
+        <Reveal><Adn /></Reveal>
       </main>
       <Footer />
     </div>
