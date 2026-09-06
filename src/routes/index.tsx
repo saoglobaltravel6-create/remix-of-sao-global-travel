@@ -3,6 +3,8 @@ import { Navbar } from "@/components/sao/Navbar";
 import { Preloader } from "@/components/sao/Preloader";
 import { ScrollProgress } from "@/components/sao/ScrollProgress";
 import { Hero } from "@/components/sao/Hero";
+import { AircraftCinematic } from "@/components/sao/AircraftCinematic";
+import { GlobeExperience } from "@/components/sao/GlobeExperience";
 import { SearchEngine } from "@/components/sao/SearchEngine";
 import { Services } from "@/components/sao/Services";
 import { Destinations } from "@/components/sao/Destinations";
