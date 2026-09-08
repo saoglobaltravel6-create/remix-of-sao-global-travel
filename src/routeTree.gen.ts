@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BagagesRouteImport } from './routes/bagages'
+import { Route as CargoRouteImport } from './routes/cargo'
 import { Route as ColisRouteImport } from './routes/colis'
 import { Route as ConnexionRouteImport } from './routes/connexion'
 import { Route as DestinationsRouteImport } from './routes/destinations'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const BagagesRoute = BagagesRouteImport.update({
   id: '/bagages',
   path: '/bagages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CargoRoute = CargoRouteImport.update({
+  id: '/cargo',
+  path: '/cargo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ColisRoute = ColisRouteImport.update({
@@ -50,6 +56,7 @@ const VolsRoute = VolsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bagages': typeof BagagesRoute
+  '/cargo': typeof CargoRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
   '/destinations': typeof DestinationsRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bagages': typeof BagagesRoute
+  '/cargo': typeof CargoRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
   '/destinations': typeof DestinationsRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bagages': typeof BagagesRoute
+  '/cargo': typeof CargoRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
   '/destinations': typeof DestinationsRoute
@@ -75,13 +84,27 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/bagages' | '/colis' | '/connexion' | '/destinations' | '/vols'
+    | '/'
+    | '/bagages'
+    | '/cargo'
+    | '/colis'
+    | '/connexion'
+    | '/destinations'
+    | '/vols'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bagages' | '/colis' | '/connexion' | '/destinations' | '/vols'
+  to:
+    | '/'
+    | '/bagages'
+    | '/cargo'
+    | '/colis'
+    | '/connexion'
+    | '/destinations'
+    | '/vols'
   id:
     | '__root__'
     | '/'
     | '/bagages'
+    | '/cargo'
     | '/colis'
     | '/connexion'
     | '/destinations'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BagagesRoute: typeof BagagesRoute
+  CargoRoute: typeof CargoRoute
   ColisRoute: typeof ColisRoute
   ConnexionRoute: typeof ConnexionRoute
   DestinationsRoute: typeof DestinationsRoute
@@ -111,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/bagages'
       fullPath: '/bagages'
       preLoaderRoute: typeof BagagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cargo': {
+      id: '/cargo'
+      path: '/cargo'
+      fullPath: '/cargo'
+      preLoaderRoute: typeof CargoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/colis': {
@@ -147,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BagagesRoute: BagagesRoute,
+  CargoRoute: CargoRoute,
   ColisRoute: ColisRoute,
   ConnexionRoute: ConnexionRoute,
   DestinationsRoute: DestinationsRoute,
