@@ -48,7 +48,9 @@ function Index() {
       <main>
         <Hero />
         <Reveal><SearchEngine /></Reveal>
+        <AircraftCinematic />
         <Reveal><Services /></Reveal>
+        <GlobeExperience />
         <Destinations />
         <Reveal><TrackingMoney /></Reveal>
         <Reveal><Adn /></Reveal>
