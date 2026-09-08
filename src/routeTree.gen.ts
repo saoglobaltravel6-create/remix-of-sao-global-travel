@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BagagesRouteImport } from './routes/bagages'
+import { Route as BusRouteImport } from './routes/bus'
 import { Route as CargoRouteImport } from './routes/cargo'
 import { Route as ColisRouteImport } from './routes/colis'
 import { Route as ConnexionRouteImport } from './routes/connexion'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const BagagesRoute = BagagesRouteImport.update({
   id: '/bagages',
   path: '/bagages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusRoute = BusRouteImport.update({
+  id: '/bus',
+  path: '/bus',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CargoRoute = CargoRouteImport.update({
@@ -56,6 +62,7 @@ const VolsRoute = VolsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bagages': typeof BagagesRoute
+  '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bagages': typeof BagagesRoute
+  '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bagages': typeof BagagesRoute
+  '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/bagages'
+    | '/bus'
     | '/cargo'
     | '/colis'
     | '/connexion'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/bagages'
+    | '/bus'
     | '/cargo'
     | '/colis'
     | '/connexion'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/bagages'
+    | '/bus'
     | '/cargo'
     | '/colis'
     | '/connexion'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BagagesRoute: typeof BagagesRoute
+  BusRoute: typeof BusRoute
   CargoRoute: typeof CargoRoute
   ColisRoute: typeof ColisRoute
   ConnexionRoute: typeof ConnexionRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/bagages'
       fullPath: '/bagages'
       preLoaderRoute: typeof BagagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bus': {
+      id: '/bus'
+      path: '/bus'
+      fullPath: '/bus'
+      preLoaderRoute: typeof BusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cargo': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BagagesRoute: BagagesRoute,
+  BusRoute: BusRoute,
   CargoRoute: CargoRoute,
   ColisRoute: ColisRoute,
   ConnexionRoute: ConnexionRoute,
