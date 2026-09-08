@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AlertTriangle, PackageCheck, ShieldCheck } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import afrique from "@/assets/dest-afrique.jpg";
 
 export const Route = createFileRoute("/colis")({
@@ -105,6 +106,10 @@ function ColisPage() {
         >
           Ouvrir le suivi
         </Link>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="colis" />
       </Section>
 
       <CtaBand

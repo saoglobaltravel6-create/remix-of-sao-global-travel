@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Bus, Clock, MapPin, Ticket } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import afrique from "@/assets/dest-afrique.jpg";
 
 export const Route = createFileRoute("/bus")({
@@ -92,6 +93,10 @@ function BusPage() {
             réservée tant qu'un conseiller ne l'a pas confirmée.
           </p>
         </form>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="bus" />
       </Section>
 
       <CtaBand

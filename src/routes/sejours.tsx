@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BedDouble, CalendarRange, Plane, Users } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import moyenOrient from "@/assets/dest-moyen-orient.jpg";
 
 export const Route = createFileRoute("/sejours")({
@@ -67,6 +68,10 @@ function SejoursPage() {
             </li>
           ))}
         </ol>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="sejours" />
       </Section>
 
       <CtaBand
