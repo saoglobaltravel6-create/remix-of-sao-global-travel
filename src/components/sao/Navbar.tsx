@@ -3,6 +3,7 @@ import { Menu, X, Phone, ChevronDown, UserRound } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/sao-logo.png.asset.json";
 import { NAV_GROUPS } from "@/lib/site-nav";
+import { useAuth } from "@/hooks/use-auth";
 
 type Props = {
   /** Barre opaque et collante (pages internes) plutôt que superposée au hero. */
@@ -12,6 +13,8 @@ type Props = {
 export function Navbar({ solid = false }: Props) {
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState<string | null>(null);
+  const { user } = useAuth();
+  const espaceTo = (user ? "/espace-client" : "/connexion") as "/";
 
   return (
     <header
@@ -65,7 +68,7 @@ export function Navbar({ solid = false }: Props) {
             +235 66 28 86 49
           </a>
           <Link
-            to="/connexion"
+            to={espaceTo}
             className="hidden items-center gap-2 rounded-full bg-sao-navy px-5 py-3 text-[13px] font-semibold tracking-wide text-primary-foreground transition-[filter] duration-200 hover:brightness-125 md:inline-flex"
           >
             <UserRound className="size-4" aria-hidden="true" /> ESPACE CLIENT
@@ -149,7 +152,7 @@ export function Navbar({ solid = false }: Props) {
               </div>
             ))}
             <Link
-              to="/connexion"
+              to={espaceTo}
               onClick={() => setOpen(false)}
               className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-sao-navy px-5 py-3 text-sm font-semibold text-primary-foreground"
             >
