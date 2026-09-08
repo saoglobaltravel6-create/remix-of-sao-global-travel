@@ -19,6 +19,7 @@ import { Route as ColisRouteImport } from './routes/colis'
 import { Route as ConnexionRouteImport } from './routes/connexion'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DestinationsRouteImport } from './routes/destinations'
+import { Route as EspaceClientRouteImport } from './routes/espace-client'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as SaomoneyRouteImport } from './routes/saomoney'
 import { Route as SejoursRouteImport } from './routes/sejours'
@@ -76,6 +77,11 @@ const DestinationsRoute = DestinationsRouteImport.update({
   path: '/destinations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EspaceClientRoute = EspaceClientRouteImport.update({
+  id: '/espace-client',
+  path: '/espace-client',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PartenairesRoute = PartenairesRouteImport.update({
   id: '/partenaires',
   path: '/partenaires',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/connexion': typeof ConnexionRoute
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/connexion': typeof ConnexionRoute
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/connexion': typeof ConnexionRoute
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/connexion'
     | '/contact'
     | '/destinations'
+    | '/espace-client'
     | '/partenaires'
     | '/saomoney'
     | '/sejours'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/connexion'
     | '/contact'
     | '/destinations'
+    | '/espace-client'
     | '/partenaires'
     | '/saomoney'
     | '/sejours'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/connexion'
     | '/contact'
     | '/destinations'
+    | '/espace-client'
     | '/partenaires'
     | '/saomoney'
     | '/sejours'
@@ -230,6 +242,7 @@ export interface RootRouteChildren {
   ConnexionRoute: typeof ConnexionRoute
   ContactRoute: typeof ContactRoute
   DestinationsRoute: typeof DestinationsRoute
+  EspaceClientRoute: typeof EspaceClientRoute
   PartenairesRoute: typeof PartenairesRoute
   SaomoneyRoute: typeof SaomoneyRoute
   SejoursRoute: typeof SejoursRoute
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DestinationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/espace-client': {
+      id: '/espace-client'
+      path: '/espace-client'
+      fullPath: '/espace-client'
+      preLoaderRoute: typeof EspaceClientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/partenaires': {
       id: '/partenaires'
       path: '/partenaires'
@@ -366,6 +386,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConnexionRoute: ConnexionRoute,
   ContactRoute: ContactRoute,
   DestinationsRoute: DestinationsRoute,
+  EspaceClientRoute: EspaceClientRoute,
   PartenairesRoute: PartenairesRoute,
   SaomoneyRoute: SaomoneyRoute,
   SejoursRoute: SejoursRoute,

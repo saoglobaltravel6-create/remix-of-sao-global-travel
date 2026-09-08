@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Compass, Map as MapIcon, Tent, UsersRound } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import afrique from "@/assets/dest-afrique.jpg";
 
 export const Route = createFileRoute("/circuits")({
@@ -52,6 +53,10 @@ function CircuitsPage() {
           Les circuits programmés, leurs dates et leurs tarifs ne sont pas encore publiés : ils
           dépendent de la saison et des conditions d'accès. Chaque circuit est confirmé au cas par cas.
         </DemoNote>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="circuits" />
       </Section>
 
       <CtaBand

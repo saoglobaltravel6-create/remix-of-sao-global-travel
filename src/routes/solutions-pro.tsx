@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Building2, FileSpreadsheet, Plane, Truck } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import europe from "@/assets/dest-europe.jpg";
 
 export const Route = createFileRoute("/solutions-pro")({
@@ -69,6 +70,10 @@ function ProPage() {
             </li>
           ))}
         </ol>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="solutions-pro" />
       </Section>
 
       <CtaBand

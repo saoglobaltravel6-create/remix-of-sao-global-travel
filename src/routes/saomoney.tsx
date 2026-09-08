@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CircleDollarSign, Lock, Smartphone, Wallet } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { WalletPanel } from "@/components/sao/WalletPanel";
 import afrique from "@/assets/dest-afrique.jpg";
 
 export const Route = createFileRoute("/saomoney")({
@@ -52,6 +53,10 @@ function SaoMoneyPage() {
           SAO Money n'est pas encore ouvert en ligne : aucun transfert, solde ni frais réel n'est
           affiché ou traité sur ce site. Les opérations se font aujourd'hui avec un conseiller.
         </DemoNote>
+      </Section>
+
+      <Section tone="ivory" title="Mon portefeuille" lead="Solde, dépôt, transfert et historique de vos opérations.">
+        <WalletPanel />
       </Section>
 
       <CtaBand

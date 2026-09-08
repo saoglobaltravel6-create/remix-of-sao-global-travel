@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { CheckCircle2, Plane, ShieldCheck, Wallet } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import { SearchEngine } from "@/components/sao/SearchEngine";
 import { DESTINATIONS } from "@/lib/destinations";
 import heroImg from "@/assets/hero-airport.jpg";
@@ -88,6 +89,10 @@ function VolsPage() {
           </Link>
           .
         </p>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="vols" />
       </Section>
 
       <CtaBand

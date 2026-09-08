@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AlertTriangle, Luggage, ShieldCheck, Tag } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import heroImg from "@/assets/hero-airport.jpg";
 
 export const Route = createFileRoute("/bagages")({
@@ -122,6 +123,10 @@ function BagagesPage() {
             </details>
           ))}
         </div>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="bagages" />
       </Section>
 
       <CtaBand

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Boxes, FileCheck2, Plane, Warehouse } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
+import { ServiceRequestForm } from "@/components/sao/ServiceRequestForm";
 import asie from "@/assets/dest-asie.jpg";
 
 export const Route = createFileRoute("/cargo")({
@@ -71,6 +72,10 @@ function CargoPage() {
           Les exigences varient selon le pays de destination et la nature de la marchandise. Nous
           établissons la liste définitive et le devis après étude de votre dossier.
         </DemoNote>
+      </Section>
+
+      <Section id="demande" tone="ivory" title="Votre demande">
+        <ServiceRequestForm service="cargo" />
       </Section>
 
       <CtaBand
