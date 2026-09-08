@@ -73,7 +73,7 @@ const LABELS: Record<string, string> = {
 /** Formulaire de demande réelle, enregistré dans l'espace client de la personne connectée. */
 export function ServiceRequestForm({ service, title }: { service: keyof typeof FIELDS | string; title?: string }) {
   const { user, loading } = useAuth();
-  const fields = FIELDS[service] ?? FIELDS.colis!;
+  const fields = FIELDS[service] ?? FIELDS['colis']!;
   const [values, setValues] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [reference, setReference] = useState<string | null>(null);
