@@ -10,17 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as BagagesRouteImport } from './routes/bagages'
 import { Route as BusRouteImport } from './routes/bus'
 import { Route as CargoRouteImport } from './routes/cargo'
+import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as ColisRouteImport } from './routes/colis'
 import { Route as ConnexionRouteImport } from './routes/connexion'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DestinationsRouteImport } from './routes/destinations'
+import { Route as PartenairesRouteImport } from './routes/partenaires'
+import { Route as SaomoneyRouteImport } from './routes/saomoney'
+import { Route as SejoursRouteImport } from './routes/sejours'
+import { Route as SolutionsProRouteImport } from './routes/solutions-pro'
+import { Route as SuiviRouteImport } from './routes/suivi'
 import { Route as VolsRouteImport } from './routes/vols'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagagesRoute = BagagesRouteImport.update({
@@ -38,6 +51,11 @@ const CargoRoute = CargoRouteImport.update({
   path: '/cargo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CircuitsRoute = CircuitsRouteImport.update({
+  id: '/circuits',
+  path: '/circuits',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ColisRoute = ColisRouteImport.update({
   id: '/colis',
   path: '/colis',
@@ -48,9 +66,39 @@ const ConnexionRoute = ConnexionRouteImport.update({
   path: '/connexion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DestinationsRoute = DestinationsRouteImport.update({
   id: '/destinations',
   path: '/destinations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartenairesRoute = PartenairesRouteImport.update({
+  id: '/partenaires',
+  path: '/partenaires',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SaomoneyRoute = SaomoneyRouteImport.update({
+  id: '/saomoney',
+  path: '/saomoney',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SejoursRoute = SejoursRouteImport.update({
+  id: '/sejours',
+  path: '/sejours',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsProRoute = SolutionsProRouteImport.update({
+  id: '/solutions-pro',
+  path: '/solutions-pro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuiviRoute = SuiviRouteImport.update({
+  id: '/suivi',
+  path: '/suivi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VolsRoute = VolsRouteImport.update({
@@ -61,76 +109,132 @@ const VolsRoute = VolsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bagages': typeof BagagesRoute
   '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
+  '/circuits': typeof CircuitsRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
+  '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/partenaires': typeof PartenairesRoute
+  '/saomoney': typeof SaomoneyRoute
+  '/sejours': typeof SejoursRoute
+  '/solutions-pro': typeof SolutionsProRoute
+  '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bagages': typeof BagagesRoute
   '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
+  '/circuits': typeof CircuitsRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
+  '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/partenaires': typeof PartenairesRoute
+  '/saomoney': typeof SaomoneyRoute
+  '/sejours': typeof SejoursRoute
+  '/solutions-pro': typeof SolutionsProRoute
+  '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bagages': typeof BagagesRoute
   '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
+  '/circuits': typeof CircuitsRoute
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
+  '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/partenaires': typeof PartenairesRoute
+  '/saomoney': typeof SaomoneyRoute
+  '/sejours': typeof SejoursRoute
+  '/solutions-pro': typeof SolutionsProRoute
+  '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/bagages'
     | '/bus'
     | '/cargo'
+    | '/circuits'
     | '/colis'
     | '/connexion'
+    | '/contact'
     | '/destinations'
+    | '/partenaires'
+    | '/saomoney'
+    | '/sejours'
+    | '/solutions-pro'
+    | '/suivi'
     | '/vols'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/bagages'
     | '/bus'
     | '/cargo'
+    | '/circuits'
     | '/colis'
     | '/connexion'
+    | '/contact'
     | '/destinations'
+    | '/partenaires'
+    | '/saomoney'
+    | '/sejours'
+    | '/solutions-pro'
+    | '/suivi'
     | '/vols'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/bagages'
     | '/bus'
     | '/cargo'
+    | '/circuits'
     | '/colis'
     | '/connexion'
+    | '/contact'
     | '/destinations'
+    | '/partenaires'
+    | '/saomoney'
+    | '/sejours'
+    | '/solutions-pro'
+    | '/suivi'
     | '/vols'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   BagagesRoute: typeof BagagesRoute
   BusRoute: typeof BusRoute
   CargoRoute: typeof CargoRoute
+  CircuitsRoute: typeof CircuitsRoute
   ColisRoute: typeof ColisRoute
   ConnexionRoute: typeof ConnexionRoute
+  ContactRoute: typeof ContactRoute
   DestinationsRoute: typeof DestinationsRoute
+  PartenairesRoute: typeof PartenairesRoute
+  SaomoneyRoute: typeof SaomoneyRoute
+  SejoursRoute: typeof SejoursRoute
+  SolutionsProRoute: typeof SolutionsProRoute
+  SuiviRoute: typeof SuiviRoute
   VolsRoute: typeof VolsRoute
 }
 
@@ -141,6 +245,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bagages': {
@@ -164,6 +275,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CargoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/circuits': {
+      id: '/circuits'
+      path: '/circuits'
+      fullPath: '/circuits'
+      preLoaderRoute: typeof CircuitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/colis': {
       id: '/colis'
       path: '/colis'
@@ -178,11 +296,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConnexionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/destinations': {
       id: '/destinations'
       path: '/destinations'
       fullPath: '/destinations'
       preLoaderRoute: typeof DestinationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partenaires': {
+      id: '/partenaires'
+      path: '/partenaires'
+      fullPath: '/partenaires'
+      preLoaderRoute: typeof PartenairesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saomoney': {
+      id: '/saomoney'
+      path: '/saomoney'
+      fullPath: '/saomoney'
+      preLoaderRoute: typeof SaomoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sejours': {
+      id: '/sejours'
+      path: '/sejours'
+      fullPath: '/sejours'
+      preLoaderRoute: typeof SejoursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions-pro': {
+      id: '/solutions-pro'
+      path: '/solutions-pro'
+      fullPath: '/solutions-pro'
+      preLoaderRoute: typeof SolutionsProRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suivi': {
+      id: '/suivi'
+      path: '/suivi'
+      fullPath: '/suivi'
+      preLoaderRoute: typeof SuiviRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/vols': {
@@ -197,12 +357,20 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   BagagesRoute: BagagesRoute,
   BusRoute: BusRoute,
   CargoRoute: CargoRoute,
+  CircuitsRoute: CircuitsRoute,
   ColisRoute: ColisRoute,
   ConnexionRoute: ConnexionRoute,
+  ContactRoute: ContactRoute,
   DestinationsRoute: DestinationsRoute,
+  PartenairesRoute: PartenairesRoute,
+  SaomoneyRoute: SaomoneyRoute,
+  SejoursRoute: SejoursRoute,
+  SolutionsProRoute: SolutionsProRoute,
+  SuiviRoute: SuiviRoute,
   VolsRoute: VolsRoute,
 }
 export const routeTree = rootRouteImport
