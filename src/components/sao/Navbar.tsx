@@ -32,7 +32,7 @@ export function Navbar({ solid = false }: Props) {
             alt="SAO Global Travel"
             width={1536}
             height={1024}
-            className="h-11 w-auto object-contain lg:h-14"
+            className="h-14 w-auto object-contain lg:h-16"
           />
         </Link>
 

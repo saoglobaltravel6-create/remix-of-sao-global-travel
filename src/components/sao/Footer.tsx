@@ -16,7 +16,7 @@ export function Footer() {
               alt="SAO Global Travel"
               width={1536}
               height={1024}
-              className="h-16 w-auto object-contain"
+              className="h-20 w-auto object-contain"
               loading="lazy"
             />
           </div>

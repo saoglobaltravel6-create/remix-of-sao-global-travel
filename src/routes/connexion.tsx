@@ -102,7 +102,7 @@ function Connexion() {
               alt="SAO Global Travel"
               width={1536}
               height={1024}
-              className="h-10 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
           </span>
           <h2 className="mt-5 font-display text-4xl leading-none tracking-tighter text-primary-foreground lg:text-6xl">
