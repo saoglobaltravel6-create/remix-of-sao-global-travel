@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import heroImg from "@/assets/hero-airport.jpg";
-import logo from "@/assets/sao-logo.png.asset.json";
+import travelLogo from "@/assets/sao-global-travel-official.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/use-auth";
@@ -97,7 +97,13 @@ function Connexion() {
         <div className="absolute inset-0" style={{ background: "var(--scrim-hero)" }} aria-hidden="true" />
         <div className="absolute inset-x-0 bottom-0 p-8 lg:p-10">
           <span className="inline-flex rounded-2xl bg-background p-2" style={step(120)}>
-            <img src={logo.url} alt="SAO Global Travel" width={160} height={106} className="h-10 w-auto" />
+            <img
+              src={travelLogo.url}
+              alt="SAO Global Travel"
+              width={1087}
+              height={585}
+              className="h-10 w-auto object-contain"
+            />
           </span>
           <h2 className="mt-5 font-display text-4xl leading-none tracking-tighter text-primary-foreground lg:text-6xl">
             <span className="block" style={step(240)}>Votre voyage,</span>

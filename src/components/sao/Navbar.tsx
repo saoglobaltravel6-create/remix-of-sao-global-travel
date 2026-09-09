@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X, Phone, ChevronDown, UserRound } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/sao-logo.png.asset.json";
+import travelLogo from "@/assets/sao-global-travel-official.png.asset.json";
 import { NAV_GROUPS } from "@/lib/site-nav";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -28,11 +28,11 @@ export function Navbar({ solid = false }: Props) {
       <div className="sao-container flex items-center justify-between gap-4 py-4 lg:py-5">
         <Link to="/" className="shrink-0" aria-label="SAO Global Travel — accueil">
           <img
-            src={logo.url}
+            src={travelLogo.url}
             alt="SAO Global Travel"
-            width={200}
-            height={132}
-            className="h-11 w-auto lg:h-14"
+            width={1087}
+            height={585}
+            className="h-11 w-auto object-contain lg:h-14"
           />
         </Link>
 

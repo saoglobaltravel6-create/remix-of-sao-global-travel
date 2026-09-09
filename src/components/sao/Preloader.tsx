@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "@/assets/sao-logo.png.asset.json";
+import travelLogo from "@/assets/sao-global-travel-official.png.asset.json";
 
 export function Preloader() {
   const [progress, setProgress] = useState(0);
@@ -43,11 +43,11 @@ export function Preloader() {
       }}
     >
       <img
-        src={logo.url}
+        src={travelLogo.url}
         alt=""
-        width={200}
-        height={132}
-        className="h-20 w-auto"
+        width={1087}
+        height={585}
+        className="h-20 w-auto object-contain"
         style={{ animation: "fadeInSoft 0.7s var(--ease-soft) both" }}
       />
       <div className="mt-8 h-px w-40 overflow-hidden bg-sao-ivory/20">

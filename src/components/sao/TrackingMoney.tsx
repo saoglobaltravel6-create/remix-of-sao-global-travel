@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Search, Award, CircleDollarSign } from "lucide-react";
 import { DemoBadge } from "./DemoBadge";
+import moneyLogo from "@/assets/sao-money-official.png.asset.json";
 
 const TIMELINE = [
   { date: "25/04/2026 10:20", label: "Enregistré", place: "Dakar, Sénégal", done: true },
@@ -76,7 +77,14 @@ export function TrackingMoney() {
       <div className="flex flex-col gap-6">
         <div id="sao-money" className="sao-card p-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold tracking-tight text-sao-navy">SAO Money</h2>
+            <img
+              src={moneyLogo.url}
+              alt="SAO Money"
+              width={480}
+              height={382}
+              className="h-12 w-auto object-contain"
+              loading="lazy"
+            />
             <CircleDollarSign className="size-6 text-sao-gold" aria-hidden="true" />
           </div>
           <div className="mt-4 grid grid-cols-2 gap-4">
