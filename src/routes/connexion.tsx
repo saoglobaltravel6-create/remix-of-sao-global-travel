@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import heroImg from "@/assets/hero-airport.jpg";
-import travelLogo from "@/assets/sao-global-travel-official.png.asset.json";
+import travelLogo from "@/assets/sao-main-logo.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/use-auth";
@@ -100,8 +100,8 @@ function Connexion() {
             <img
               src={travelLogo.url}
               alt="SAO Global Travel"
-              width={1087}
-              height={585}
+              width={1536}
+              height={1024}
               className="h-10 w-auto object-contain"
             />
           </span>
