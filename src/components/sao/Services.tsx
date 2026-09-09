@@ -1,4 +1,5 @@
 import { Plane, Luggage, Package, Ship, Bus, CircleDollarSign, Building2, Palmtree } from "lucide-react";
+import moneyLogo from "@/assets/sao-money-official.png.asset.json";
 
 const SERVICES = [
   { icon: Plane, title: "VOLS", desc: "Le monde, au départ de N'Djamena." },
@@ -28,9 +29,22 @@ export function Services() {
             key={title}
             className="sao-card group flex flex-col items-center gap-3 p-6 text-center transition-transform duration-300 hover:-translate-y-1"
           >
-            <span className="rounded-2xl bg-sao-ivory p-3 text-sao-navy transition-colors duration-300 group-hover:bg-sao-gold/20">
-              <Icon className="size-7" aria-hidden="true" />
-            </span>
+            {title === "SAO MONEY" ? (
+              <span className="flex h-[52px] items-center rounded-2xl bg-sao-ivory px-3 transition-colors duration-300 group-hover:bg-sao-gold/20">
+                <img
+                  src={moneyLogo.url}
+                  alt="SAO Money"
+                  width={480}
+                  height={382}
+                  className="h-9 w-auto object-contain"
+                  loading="lazy"
+                />
+              </span>
+            ) : (
+              <span className="rounded-2xl bg-sao-ivory p-3 text-sao-navy transition-colors duration-300 group-hover:bg-sao-gold/20">
+                <Icon className="size-7" aria-hidden="true" />
+              </span>
+            )}
             <h3 className="text-sm font-bold tracking-wide text-sao-navy">{title}</h3>
             <p className="text-xs text-muted-foreground">{desc}</p>
             <span className="mt-1 h-0.5 w-8 bg-sao-gold" aria-hidden="true" />
