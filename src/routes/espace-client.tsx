@@ -17,7 +17,6 @@ import { PageShell, Section, DemoNote } from "@/components/sao/PageShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, signOut } from "@/hooks/use-auth";
 import hero from "@/assets/hero-airport.jpg";
-import moneyLogo from "@/assets/sao-money-official.png.asset.json";
 
 export const Route = createFileRoute("/espace-client")({
   head: () => ({
@@ -207,14 +206,9 @@ function EspaceClient() {
 
       <Section tone="ivory" title="SAO Money">
         <div className="sao-card p-6">
-          <img
-            src={moneyLogo.url}
-            alt="SAO Money"
-            width={480}
-            height={382}
-            className="mb-5 h-16 w-auto max-w-full object-contain"
-            loading="lazy"
-          />
+          <p className="mb-5 font-display text-3xl tracking-tighter text-sao-navy">
+            SAO <span className="text-sao-gold">MONEY</span>
+          </p>
           <p className="text-xs uppercase tracking-wide text-muted-foreground">Solde du portefeuille</p>
           <p className="mt-2 font-display text-4xl tracking-tighter text-sao-navy">
             {wallet ? `${wallet.balance.toLocaleString("fr-FR")} ${wallet.currency}` : "—"}

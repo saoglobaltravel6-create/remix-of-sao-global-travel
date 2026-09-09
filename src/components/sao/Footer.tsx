@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
-import travelLogo from "@/assets/sao-global-travel-official.png.asset.json";
+import travelLogo from "@/assets/sao-main-logo.png.asset.json";
 import { Marquee } from "@/components/sao/Marquee";
 import { NAV_GROUPS } from "@/lib/site-nav";
 
@@ -14,9 +14,9 @@ export function Footer() {
             <img
               src={travelLogo.url}
               alt="SAO Global Travel"
-              width={1087}
-              height={585}
-              className="h-16 w-auto object-contain"
+              width={1536}
+              height={1024}
+              className="h-20 w-auto object-contain"
               loading="lazy"
             />
           </div>

@@ -3,7 +3,7 @@ import { CircleDollarSign, Lock, Smartphone, Wallet } from "lucide-react";
 import { PageShell, Section, CtaBand, DemoNote } from "@/components/sao/PageShell";
 import { WalletPanel } from "@/components/sao/WalletPanel";
 import afrique from "@/assets/dest-afrique.jpg";
-import moneyLogo from "@/assets/sao-money-official.png.asset.json";
+import moneyLogo from "@/assets/sao-money-logo.png.asset.json";
 
 export const Route = createFileRoute("/saomoney")({
   head: () => ({
@@ -39,8 +39,8 @@ function SaoMoneyPage() {
         <img
           src={moneyLogo.url}
           alt="SAO Money"
-          width={480}
-          height={382}
+          width={1131}
+          height={649}
           className="h-24 w-auto max-w-full object-contain"
         />
       </div>
