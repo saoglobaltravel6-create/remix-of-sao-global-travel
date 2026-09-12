@@ -69,10 +69,13 @@ export function Navbar({ solid = false }: Props) {
           </a>
           <Link
             to={espaceTo}
-            className="hidden items-center gap-2 rounded-full bg-sao-navy px-5 py-3 text-[13px] font-semibold tracking-wide text-primary-foreground transition-[filter] duration-200 hover:brightness-125 md:inline-flex"
+            aria-label="Espace client"
+            className="inline-flex items-center gap-2 rounded-full bg-sao-navy p-2.5 text-[13px] font-semibold tracking-wide text-primary-foreground transition-[filter] duration-200 hover:brightness-125 md:px-5 md:py-3"
           >
-            <UserRound className="size-4" aria-hidden="true" /> ESPACE CLIENT
+            <UserRound className="size-4" aria-hidden="true" />
+            <span className="hidden md:inline">ESPACE CLIENT</span>
           </Link>
+
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
