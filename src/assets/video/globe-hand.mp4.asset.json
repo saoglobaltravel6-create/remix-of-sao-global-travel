@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "76a2ec95-f88a-4d6f-b2be-e4b7034600d0",
-  "project_id": "0f4ec788-64b4-43ab-ac44-393e6d8cf2ab",
-  "url": "/__l5e/assets-v1/76a2ec95-f88a-4d6f-b2be-e4b7034600d0/globe-hand.mp4",
-  "r2_key": "a/v1/0f4ec788-64b4-43ab-ac44-393e6d8cf2ab/76a2ec95-f88a-4d6f-b2be-e4b7034600d0/globe-hand.mp4",
-  "original_filename": "globe-hand.mp4",
-  "size": 2078363,
   "content_type": "video/mp4",
-  "created_at": "2026-09-06T04:39:58Z"
+  "created_at": "2026-09-06T04:39:58Z",
+  "original_filename": "globe-hand.mp4",
+  "project_id": "b0f084ca-7757-4e43-9254-4b7a4e5fe4de",
+  "r2_key": "a/v1/b0f084ca-7757-4e43-9254-4b7a4e5fe4de/76a2ec95-f88a-4d6f-b2be-e4b7034600d0/globe-hand.mp4",
+  "size": 2078363,
+  "url": "/__l5e/assets-v1/76a2ec95-f88a-4d6f-b2be-e4b7034600d0/globe-hand.mp4",
+  "version": 1
 }

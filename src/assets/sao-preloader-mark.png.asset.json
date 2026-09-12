@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "dd649a55-80da-4b1a-8faf-d44a0dbfb70e",
-  "project_id": "0f4ec788-64b4-43ab-ac44-393e6d8cf2ab",
-  "url": "/__l5e/assets-v1/dd649a55-80da-4b1a-8faf-d44a0dbfb70e/sao-preloader-mark.png",
-  "r2_key": "a/v1/0f4ec788-64b4-43ab-ac44-393e6d8cf2ab/dd649a55-80da-4b1a-8faf-d44a0dbfb70e/sao-preloader-mark.png",
-  "original_filename": "sao-preloader-mark.png",
-  "size": 1361880,
   "content_type": "image/png",
-  "created_at": "2026-09-09T16:48:14Z"
+  "created_at": "2026-09-09T16:48:14Z",
+  "original_filename": "sao-preloader-mark.png",
+  "project_id": "b0f084ca-7757-4e43-9254-4b7a4e5fe4de",
+  "r2_key": "a/v1/b0f084ca-7757-4e43-9254-4b7a4e5fe4de/dd649a55-80da-4b1a-8faf-d44a0dbfb70e/sao-preloader-mark.png",
+  "size": 1361880,
+  "url": "/__l5e/assets-v1/dd649a55-80da-4b1a-8faf-d44a0dbfb70e/sao-preloader-mark.png",
+  "version": 1
 }

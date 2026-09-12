@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "d97b565f-f4bb-4eeb-95a4-4e153bf1fba4",
-  "project_id": "0f4ec788-64b4-43ab-ac44-393e6d8cf2ab",
-  "url": "/__l5e/assets-v1/d97b565f-f4bb-4eeb-95a4-4e153bf1fba4/aircraft-night.mp4",
-  "r2_key": "a/v1/0f4ec788-64b4-43ab-ac44-393e6d8cf2ab/d97b565f-f4bb-4eeb-95a4-4e153bf1fba4/aircraft-night.mp4",
-  "original_filename": "aircraft-night.mp4",
-  "size": 6436175,
   "content_type": "video/mp4",
-  "created_at": "2026-09-06T04:39:54Z"
+  "created_at": "2026-09-06T04:39:54Z",
+  "original_filename": "aircraft-night.mp4",
+  "project_id": "b0f084ca-7757-4e43-9254-4b7a4e5fe4de",
+  "r2_key": "a/v1/b0f084ca-7757-4e43-9254-4b7a4e5fe4de/d97b565f-f4bb-4eeb-95a4-4e153bf1fba4/aircraft-night.mp4",
+  "size": 6436175,
+  "url": "/__l5e/assets-v1/d97b565f-f4bb-4eeb-95a4-4e153bf1fba4/aircraft-night.mp4",
+  "version": 1
 }

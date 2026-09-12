@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "c0616006-3d32-43f9-9c62-4ff618919738",
-  "project_id": "0f4ec788-64b4-43ab-ac44-393e6d8cf2ab",
-  "url": "/__l5e/assets-v1/c0616006-3d32-43f9-9c62-4ff618919738/sao-logo.png",
-  "r2_key": "a/v1/0f4ec788-64b4-43ab-ac44-393e6d8cf2ab/c0616006-3d32-43f9-9c62-4ff618919738/sao-logo.png",
-  "original_filename": "sao-logo.png",
-  "size": 920542,
   "content_type": "image/png",
-  "created_at": "2026-08-28T08:27:06Z"
+  "created_at": "2026-08-28T08:27:06Z",
+  "original_filename": "sao-logo.png",
+  "project_id": "b0f084ca-7757-4e43-9254-4b7a4e5fe4de",
+  "r2_key": "a/v1/b0f084ca-7757-4e43-9254-4b7a4e5fe4de/c0616006-3d32-43f9-9c62-4ff618919738/sao-logo.png",
+  "size": 920542,
+  "url": "/__l5e/assets-v1/c0616006-3d32-43f9-9c62-4ff618919738/sao-logo.png",
+  "version": 1
 }
