@@ -162,14 +162,14 @@ export function Destinations() {
                   <div className="min-w-0">
                     <p className="truncate font-semibold text-sao-navy">{v.ville}</p>
                     <p className="truncate text-xs text-muted-foreground">
-                      {v.pays} · {v.duree} de vol
+                      {v.pays} · durée {v.duree.toLowerCase()}
                     </p>
                   </div>
                 </div>
                 <span className="shrink-0 text-right text-xs font-semibold text-sao-navy">
-                  dès
+                  Tarif
                   <br />
-                  {v.apd}
+                  {v.apd.toLowerCase()}
                 </span>
               </li>
             ))}
