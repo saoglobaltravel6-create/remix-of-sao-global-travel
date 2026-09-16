@@ -23,10 +23,10 @@ const ZONES: Zone[] = [
     desc: "Explorez la richesse du continent.",
     intro: "Au départ de N'Djamena et de Dakar, un réseau dense vers les grandes capitales africaines.",
     villes: [
-      { ville: "Dakar", pays: "Sénégal", duree: "5h10", apd: "310 000 FCFA" },
-      { ville: "Abidjan", pays: "Côte d'Ivoire", duree: "4h35", apd: "295 000 FCFA" },
-      { ville: "Casablanca", pays: "Maroc", duree: "6h20", apd: "385 000 FCFA" },
-      { ville: "Nairobi", pays: "Kenya", duree: "5h45", apd: "420 000 FCFA" },
+      { ville: "Dakar", pays: "Sénégal", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Abidjan", pays: "Côte d'Ivoire", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Casablanca", pays: "Maroc", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Nairobi", pays: "Kenya", duree: "Sur demande", apd: "Sur demande" },
     ],
   },
   {
@@ -36,10 +36,10 @@ const ZONES: Zone[] = [
     desc: "Découvrez les plus belles villes d'Europe.",
     intro: "Correspondances optimisées vers l'Europe de l'Ouest, avec accompagnement visa et bagages suivis.",
     villes: [
-      { ville: "Paris", pays: "France", duree: "8h05", apd: "560 000 FCFA" },
-      { ville: "Bruxelles", pays: "Belgique", duree: "8h40", apd: "585 000 FCFA" },
-      { ville: "Madrid", pays: "Espagne", duree: "7h55", apd: "540 000 FCFA" },
-      { ville: "Genève", pays: "Suisse", duree: "8h20", apd: "610 000 FCFA" },
+      { ville: "Paris", pays: "France", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Bruxelles", pays: "Belgique", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Madrid", pays: "Espagne", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Genève", pays: "Suisse", duree: "Sur demande", apd: "Sur demande" },
     ],
   },
   {
@@ -49,10 +49,10 @@ const ZONES: Zone[] = [
     desc: "Voyagez au cœur des cultures.",
     intro: "Hubs rapides vers le Golfe, idéals pour les voyages d'affaires, le cargo et les séjours religieux.",
     villes: [
-      { ville: "Dubaï", pays: "Émirats", duree: "6h30", apd: "495 000 FCFA" },
-      { ville: "Doha", pays: "Qatar", duree: "6h05", apd: "480 000 FCFA" },
-      { ville: "Djeddah", pays: "Arabie saoudite", duree: "5h20", apd: "455 000 FCFA" },
-      { ville: "Istanbul", pays: "Turquie", duree: "6h50", apd: "470 000 FCFA" },
+      { ville: "Dubaï", pays: "Émirats", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Doha", pays: "Qatar", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Djeddah", pays: "Arabie saoudite", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Istanbul", pays: "Turquie", duree: "Sur demande", apd: "Sur demande" },
     ],
   },
   {
@@ -62,10 +62,10 @@ const ZONES: Zone[] = [
     desc: "Partez à la découverte de l'Asie.",
     intro: "Longs-courriers et solutions fret pour les importateurs, avec suivi de bout en bout.",
     villes: [
-      { ville: "Guangzhou", pays: "Chine", duree: "13h10", apd: "760 000 FCFA" },
-      { ville: "Bangkok", pays: "Thaïlande", duree: "12h25", apd: "735 000 FCFA" },
-      { ville: "Mumbai", pays: "Inde", duree: "9h40", apd: "640 000 FCFA" },
-      { ville: "Kuala Lumpur", pays: "Malaisie", duree: "13h50", apd: "790 000 FCFA" },
+      { ville: "Guangzhou", pays: "Chine", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Bangkok", pays: "Thaïlande", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Mumbai", pays: "Inde", duree: "Sur demande", apd: "Sur demande" },
+      { ville: "Kuala Lumpur", pays: "Malaisie", duree: "Sur demande", apd: "Sur demande" },
     ],
   },
 ];
@@ -176,7 +176,7 @@ export function Destinations() {
           </ul>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">
-          Tarifs et durées indicatifs — données de démonstration.
+          Tarifs et durées communiqués sur demande, après vérification par un conseiller.
         </p>
       </div>
     </section>
