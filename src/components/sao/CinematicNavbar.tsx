@@ -41,7 +41,7 @@ export function CinematicNavbar() {
         const rect = section.getBoundingClientRect();
         return rect.top <= 70 && rect.bottom > 70;
       });
-      setDark(active?.dataset.navTone === "dark");
+      setDark(active?.dataset['navTone'] === "dark");
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(updateTone);
