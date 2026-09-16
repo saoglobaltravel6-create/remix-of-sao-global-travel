@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/sao/Navbar";
 import { Preloader } from "@/components/sao/Preloader";
 import { ScrollProgress } from "@/components/sao/ScrollProgress";
-import { Hero } from "@/components/sao/Hero";
+import { HeroVideoScroll } from "@/components/sao/HeroVideoScroll";
 import { AircraftCinematic } from "@/components/sao/AircraftCinematic";
 import { GlobeExperience } from "@/components/sao/GlobeExperience";
 import { SearchEngine } from "@/components/sao/SearchEngine";
@@ -46,7 +46,8 @@ function Index() {
       <GoldCursor />
 
       <main>
-        <Hero />
+        <HeroVideoScroll />
+        <div className="h-[40vh] md:h-[80vh]" aria-hidden="true" />
         <Reveal><SearchEngine /></Reveal>
         <AircraftCinematic />
         <Reveal><Services /></Reveal>
