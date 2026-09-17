@@ -34,12 +34,24 @@ function NotFoundComponent() {
   );
 }
 
+const CHUNK_ERROR = /importing a module script failed|failed to fetch dynamically imported module|error loading dynamically imported module|imported module .* does not provide/i;
+
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
+    // A stale/aborted JS chunk after a new deploy: reload once to fetch the fresh build.
+    if (typeof window !== "undefined" && CHUNK_ERROR.test(error?.message ?? "")) {
+      const key = "sao-chunk-reload";
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, "1");
+        window.location.reload();
+        return;
+      }
+    }
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
