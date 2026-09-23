@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar } from "@/components/sao/Navbar";
+import { CinematicNavbar } from "@/components/sao/CinematicNavbar";
 import { Preloader } from "@/components/sao/Preloader";
 import { ScrollProgress } from "@/components/sao/ScrollProgress";
 import { HeroVideoScroll } from "@/components/sao/HeroVideoScroll";
@@ -41,7 +41,7 @@ function Index() {
     <div className="min-h-screen bg-background">
       <Preloader />
       <ScrollProgress />
-      <Navbar />
+      <CinematicNavbar />
 
       <GoldCursor />
 

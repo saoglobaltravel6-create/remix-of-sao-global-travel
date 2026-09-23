@@ -56,6 +56,20 @@ export function CinematicNavbar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
   const tone = dark ? "text-primary-foreground" : "text-sao-navy";
 
   return (
@@ -105,7 +119,10 @@ export function CinematicNavbar() {
         </Button>
       </div>
 
-      <div className={`fixed inset-0 z-[81] bg-sao-navy transition-opacity duration-500 xl:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
+      <div
+        aria-hidden={!open}
+        className={`fixed inset-0 z-[81] bg-sao-navy transition-opacity duration-500 xl:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+      >
         <nav className="sao-container flex min-h-svh flex-col justify-center pt-24" aria-label="Menu mobile">
           {HOME_LINKS.map((item) => (
             <Link key={item.index} to={item.to} onClick={() => setOpen(false)} className="border-b border-primary-foreground/15 py-5 text-3xl font-semibold text-primary-foreground">
