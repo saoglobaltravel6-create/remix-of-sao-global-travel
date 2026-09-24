@@ -51,6 +51,7 @@ function Index() {
         <div className="h-[40vh] md:h-[80vh]" aria-hidden="true" />
         <Reveal><SearchEngine /></Reveal>
         <AircraftCinematic />
+        <ServicesGlass />
         <Reveal><Services /></Reveal>
         <GlobeExperience />
         <Destinations />
