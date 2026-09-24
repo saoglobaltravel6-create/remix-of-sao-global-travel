@@ -69,7 +69,7 @@ export function TravelAdvisor() {
           {error && <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">{error}</p>}
           {answer && (
             <div className="rounded-2xl border border-border bg-sao-ivory/60 p-5">
-              <p className="whitespace-pre-line text-sm leading-relaxed text-sao-navy">{answer}</p>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-sao-navy">{answer.replace(/\*\*/g, "")}</p>
               <p className="mt-4 text-xs text-muted-foreground">Conseils générés par IA, à titre indicatif. Tarifs et disponibilités sur demande.</p>
             </div>
           )}
