@@ -14,6 +14,7 @@ import { Adn } from "@/components/sao/Adn";
 import { Footer } from "@/components/sao/Footer";
 import { GoldCursor } from "@/components/sao/GoldCursor";
 import { Reveal } from "@/components/sao/Reveal";
+import { TravelAdvisor } from "@/components/sao/TravelAdvisor";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -52,6 +53,7 @@ function Index() {
         <Reveal><SearchEngine /></Reveal>
         <AircraftCinematic />
         <ServicesGlass />
+        <Reveal><TravelAdvisor /></Reveal>
         <Reveal><Services /></Reveal>
         <GlobeExperience />
         <Destinations />
