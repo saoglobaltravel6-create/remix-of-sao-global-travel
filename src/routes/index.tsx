@@ -6,6 +6,7 @@ import { HeroVideoScroll } from "@/components/sao/HeroVideoScroll";
 import { AircraftCinematic } from "@/components/sao/AircraftCinematic";
 import { GlobeExperience } from "@/components/sao/GlobeExperience";
 import { SearchEngine } from "@/components/sao/SearchEngine";
+import { ServicesGlass } from "@/components/sao/ServicesGlass";
 import { Services } from "@/components/sao/Services";
 import { Destinations } from "@/components/sao/Destinations";
 import { TrackingMoney } from "@/components/sao/TrackingMoney";
