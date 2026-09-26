@@ -44,7 +44,7 @@ function VolsPage() {
       image={heroImg}
       imageAlt="Avion au décollage"
     >
-      <Section title="Rechercher un vol">
+      <Section title="Rechercher un vol" lead="Prêt à réserver ? Utilisez la réservation guidée en 4 étapes (lien ci-dessous).">
         <SearchEngine />
         <DemoNote>
           Le moteur transmet votre demande à nos conseillers. Tant qu'aucune source de
