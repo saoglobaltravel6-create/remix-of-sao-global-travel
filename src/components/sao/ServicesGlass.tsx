@@ -3,7 +3,7 @@ import { ArrowRight, Plane, Package, CircleDollarSign } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const CAPABILITIES = [
-  { icon: Plane, title: "Voyager", desc: "Vols au départ de N'Djamena et Dakar, bagages suivis, séjours et circuits.", to: "/vols", cta: "Réserver un vol", hint: "Parcours voyageur" },
+  { icon: Plane, title: "Voyager", desc: "Vols au départ de N'Djamena et Dakar, bagages suivis, séjours et circuits.", to: "/reservation", cta: "Réserver un voyage", hint: "Parcours voyageur" },
   { icon: Package, title: "Expédier", desc: "Colis vers vos proches, cargo professionnel et transport régional par bus.", to: "/colis", cta: "Envoyer un colis", hint: "Parcours expédition" },
   { icon: CircleDollarSign, title: "Transférer", desc: "SAO Money : envoyez et recevez de l'argent entre l'Afrique et le monde.", to: "/saomoney", cta: "Envoyer de l'argent", hint: "Parcours SAO Money" },
 ] as const;

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BagagesRouteImport } from './routes/bagages'
 import { Route as BusRouteImport } from './routes/bus'
 import { Route as CargoRouteImport } from './routes/cargo'
@@ -21,6 +22,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EspaceClientRouteImport } from './routes/espace-client'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
+import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as SaomoneyRouteImport } from './routes/saomoney'
 import { Route as SejoursRouteImport } from './routes/sejours'
 import { Route as SolutionsProRouteImport } from './routes/solutions-pro'
@@ -35,6 +37,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagagesRoute = BagagesRouteImport.update({
@@ -87,6 +94,11 @@ const PartenairesRoute = PartenairesRouteImport.update({
   path: '/partenaires',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReservationRoute = ReservationRouteImport.update({
+  id: '/reservation',
+  path: '/reservation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SaomoneyRoute = SaomoneyRouteImport.update({
   id: '/saomoney',
   path: '/saomoney',
@@ -116,6 +128,7 @@ const VolsRoute = VolsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/bagages': typeof BagagesRoute
   '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
@@ -126,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
+  '/reservation': typeof ReservationRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
   '/solutions-pro': typeof SolutionsProRoute
@@ -135,6 +149,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/bagages': typeof BagagesRoute
   '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
@@ -145,6 +160,7 @@ export interface FileRoutesByTo {
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
+  '/reservation': typeof ReservationRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
   '/solutions-pro': typeof SolutionsProRoute
@@ -155,6 +171,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/bagages': typeof BagagesRoute
   '/bus': typeof BusRoute
   '/cargo': typeof CargoRoute
@@ -165,6 +182,7 @@ export interface FileRoutesById {
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
+  '/reservation': typeof ReservationRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
   '/solutions-pro': typeof SolutionsProRoute
@@ -176,6 +194,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/bagages'
     | '/bus'
     | '/cargo'
@@ -186,6 +205,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
+    | '/reservation'
     | '/saomoney'
     | '/sejours'
     | '/solutions-pro'
@@ -195,6 +215,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/admin'
     | '/bagages'
     | '/bus'
     | '/cargo'
@@ -205,6 +226,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
+    | '/reservation'
     | '/saomoney'
     | '/sejours'
     | '/solutions-pro'
@@ -214,6 +236,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/bagages'
     | '/bus'
     | '/cargo'
@@ -224,6 +247,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
+    | '/reservation'
     | '/saomoney'
     | '/sejours'
     | '/solutions-pro'
@@ -234,6 +258,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
   BagagesRoute: typeof BagagesRoute
   BusRoute: typeof BusRoute
   CargoRoute: typeof CargoRoute
@@ -244,6 +269,7 @@ export interface RootRouteChildren {
   DestinationsRoute: typeof DestinationsRoute
   EspaceClientRoute: typeof EspaceClientRoute
   PartenairesRoute: typeof PartenairesRoute
+  ReservationRoute: typeof ReservationRoute
   SaomoneyRoute: typeof SaomoneyRoute
   SejoursRoute: typeof SejoursRoute
   SolutionsProRoute: typeof SolutionsProRoute
@@ -265,6 +291,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bagages': {
@@ -337,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartenairesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reservation': {
+      id: '/reservation'
+      path: '/reservation'
+      fullPath: '/reservation'
+      preLoaderRoute: typeof ReservationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saomoney': {
       id: '/saomoney'
       path: '/saomoney'
@@ -378,6 +418,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
   BagagesRoute: BagagesRoute,
   BusRoute: BusRoute,
   CargoRoute: CargoRoute,
@@ -388,6 +429,7 @@ const rootRouteChildren: RootRouteChildren = {
   DestinationsRoute: DestinationsRoute,
   EspaceClientRoute: EspaceClientRoute,
   PartenairesRoute: PartenairesRoute,
+  ReservationRoute: ReservationRoute,
   SaomoneyRoute: SaomoneyRoute,
   SejoursRoute: SejoursRoute,
   SolutionsProRoute: SolutionsProRoute,
