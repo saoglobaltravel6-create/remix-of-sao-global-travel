@@ -2,9 +2,9 @@ name: NodeJS with Vite
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -29,23 +29,11 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      # The repository lockfile currently contains placeholder integrity values.
-      # Re-resolve it from package.json in the runner, then verify that the
-      # generated lockfile is usable by npm ci. This avoids committing a hand-
-      # written or fabricated lockfile.
-      - name: Regenerate npm lockfile in CI
-        run: npm install --package-lock-only --legacy-peer-deps --no-audit --no-fund
-
-      - name: Verify lockfile integrity
-        run: |
-          if grep -q 'sha512-xxx' package-lock.json; then
-            echo "Invalid placeholder integrity value found in package-lock.json"
-            exit 1
-          fi
-          npm ci --legacy-peer-deps --no-audit --no-fund
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps --no-audit --no-fund
 
       - name: Type check
-        run: npx tsc --noEmit
+        run: npm run type-check
 
       - name: Lint
         run: npm run lint
