@@ -3,13 +3,16 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "version": "1.0.0",
+  "description": "SAO Global Travel - TanStack Start TypeScript application",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "type-check": "tsc --noEmit --skipLibCheck"
   },
   "overrides": {
     "rolldown": "1.2.1"
@@ -93,5 +96,9 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
     "vite": "8.1.5"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   }
 }
