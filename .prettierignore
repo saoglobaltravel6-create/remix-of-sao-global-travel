@@ -1,8 +1,37 @@
-node_modules
-dist
-.output
-.vinxi
-pnpm-lock.yaml
+# Dependencies and lockfiles
+node_modules/
 package-lock.json
+pnpm-lock.yaml
 bun.lock
+yarn.lock
+
+# Build output and generated artifacts
+dist/
+dist-ssr/
+.output/
+.vinxi/
+.next/
+build/
+.nitro/
+.nuxt/
+.cache/
+coverage/
+.turbo/
+
+# Generated TanStack Router tree
+src/routeTree.gen.ts
 routeTree.gen.ts
+
+# Environment files and local secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor and system files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
