@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps --no-audit --no-fund
 
+      - name: Format code
+        run: npm run format
+
       - name: Type check
         run: npm run type-check
 
