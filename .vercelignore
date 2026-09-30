@@ -1,0 +1,16 @@
+node_modules/
+.env.local
+.env.*.local
+dist/
+.output/
+.vinxi/
+.nitro/
+.wrangler/
+.dev.vars
+.next/
+build/
+*.log
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
