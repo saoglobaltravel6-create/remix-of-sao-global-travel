@@ -65,10 +65,10 @@ const ToggleGroup = React.forwardRef<
           {...props}
           ref={ref}
           type="single"
-          value={value}
-          defaultValue={defaultValue}
-          onValueChange={onValueChange}
           className={cn("flex items-center justify-center gap-1", className)}
+          {...(value !== undefined && { value })}
+          {...(defaultValue !== undefined && { defaultValue })}
+          {...(onValueChange !== undefined && { onValueChange })}
         >
           {content}
         </ToggleGroupPrimitive.Root>
@@ -80,10 +80,10 @@ const ToggleGroup = React.forwardRef<
         {...props}
         ref={ref}
         type="multiple"
-        value={value}
-        defaultValue={defaultValue}
-        onValueChange={onValueChange}
         className={cn("flex items-center justify-center gap-1", className)}
+        {...(value !== undefined && { value })}
+        {...(defaultValue !== undefined && { defaultValue })}
+        {...(onValueChange !== undefined && { onValueChange })}
       >
         {content}
       </ToggleGroupPrimitive.Root>
