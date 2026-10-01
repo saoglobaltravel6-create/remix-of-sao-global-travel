@@ -13,54 +13,80 @@ const ToggleGroupContext =
     variant: "default",
   });
 
-type ToggleGroupProps =
-  | (Omit<
-      React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
-      "type"
-    > & {
-      type: "single";
-    } & VariantProps<typeof toggleVariants>)
-  | (Omit<
-      React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
-      "type"
-    > & {
-      type: "multiple";
-    } & VariantProps<typeof toggleVariants>);
+type ToggleGroupSingleProps =
+  Omit<
+    React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+    "type" | "value" | "onValueChange"
+  > & {
+    type: "single";
+    value?: string;
+    onValueChange?: (value: string) => void;
+  } & VariantProps<typeof toggleVariants>;
+
+type ToggleGroupMultipleProps =
+  Omit<
+    React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+    "type" | "value" | "onValueChange"
+  > & {
+    type: "multiple";
+    value?: string[];
+    onValueChange?: (value: string[]) => void;
+  } & VariantProps<typeof toggleVariants>;
+
+type ToggleGroupProps = ToggleGroupSingleProps | ToggleGroupMultipleProps;
 
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
   ToggleGroupProps
->(({ className, variant, size, type, children, ...props }, ref) => {
-  const content = (
-    <ToggleGroupContext.Provider value={{ variant, size }}>
-      {children}
-    </ToggleGroupContext.Provider>
-  );
+>(
+  (
+    {
+      className,
+      variant,
+      size,
+      type,
+      children,
+      value,
+      onValueChange,
+      ...props
+    },
+    ref,
+  ) => {
+    const content = (
+      <ToggleGroupContext.Provider value={{ variant, size }}>
+        {children}
+      </ToggleGroupContext.Provider>
+    );
 
-  if (type === "single") {
+    if (type === "single") {
+      return (
+        <ToggleGroupPrimitive.Root
+          {...props}
+          ref={ref}
+          type="single"
+          value={value ?? ""}
+          onValueChange={onValueChange}
+          className={cn("flex items-center justify-center gap-1", className)}
+        >
+          {content}
+        </ToggleGroupPrimitive.Root>
+      );
+    }
+
     return (
       <ToggleGroupPrimitive.Root
         {...props}
         ref={ref}
-        type="single"
+        type="multiple"
+        value={value ?? []}
+        onValueChange={onValueChange}
         className={cn("flex items-center justify-center gap-1", className)}
       >
         {content}
       </ToggleGroupPrimitive.Root>
     );
-  }
-
-  return (
-    <ToggleGroupPrimitive.Root
-      {...props}
-      ref={ref}
-      type="multiple"
-      className={cn("flex items-center justify-center gap-1", className)}
-    >
-      {content}
-    </ToggleGroupPrimitive.Root>
-  );
-});
+  },
+);
 
 ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName;
 
