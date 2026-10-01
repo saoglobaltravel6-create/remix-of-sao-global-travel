@@ -13,25 +13,25 @@ const ToggleGroupContext =
     variant: "default",
   });
 
-type ToggleGroupSingleProps =
-  Omit<
-    React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
-    "type" | "value" | "onValueChange"
-  > & {
-    type: "single";
-    value?: string;
-    onValueChange?: (value: string) => void;
-  } & VariantProps<typeof toggleVariants>;
+type ToggleGroupSharedProps = Omit<
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+  "type" | "value" | "defaultValue" | "onValueChange"
+> &
+  VariantProps<typeof toggleVariants>;
 
-type ToggleGroupMultipleProps =
-  Omit<
-    React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
-    "type" | "value" | "onValueChange"
-  > & {
-    type: "multiple";
-    value?: string[];
-    onValueChange?: (value: string[]) => void;
-  } & VariantProps<typeof toggleVariants>;
+type ToggleGroupSingleProps = ToggleGroupSharedProps & {
+  type: "single";
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+};
+
+type ToggleGroupMultipleProps = ToggleGroupSharedProps & {
+  type: "multiple";
+  value?: string[];
+  defaultValue?: string[];
+  onValueChange?: (value: string[]) => void;
+};
 
 type ToggleGroupProps = ToggleGroupSingleProps | ToggleGroupMultipleProps;
 
@@ -47,6 +47,7 @@ const ToggleGroup = React.forwardRef<
       type,
       children,
       value,
+      defaultValue,
       onValueChange,
       ...props
     },
@@ -64,7 +65,8 @@ const ToggleGroup = React.forwardRef<
           {...props}
           ref={ref}
           type="single"
-          value={value ?? ""}
+          value={value}
+          defaultValue={defaultValue}
           onValueChange={onValueChange}
           className={cn("flex items-center justify-center gap-1", className)}
         >
@@ -78,7 +80,8 @@ const ToggleGroup = React.forwardRef<
         {...props}
         ref={ref}
         type="multiple"
-        value={value ?? []}
+        value={value}
+        defaultValue={defaultValue}
         onValueChange={onValueChange}
         className={cn("flex items-center justify-center gap-1", className)}
       >
