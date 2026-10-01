@@ -14,24 +14,53 @@ const ToggleGroupContext =
   });
 
 type ToggleGroupProps =
-  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
-    VariantProps<typeof toggleVariants>;
+  | (Omit<
+      React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+      "type"
+    > & {
+      type: "single";
+    } & VariantProps<typeof toggleVariants>)
+  | (Omit<
+      React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+      "type"
+    > & {
+      type: "multiple";
+    } & VariantProps<typeof toggleVariants>);
 
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
   ToggleGroupProps
->(({ className, variant, size, type, children, ...props }, ref) => (
-  <ToggleGroupPrimitive.Root
-    {...props}
-    ref={ref}
-    type={type}
-    className={cn("flex items-center justify-center gap-1", className)}
-  >
+>(({ className, variant, size, type, children, ...props }, ref) => {
+  const content = (
     <ToggleGroupContext.Provider value={{ variant, size }}>
       {children}
     </ToggleGroupContext.Provider>
-  </ToggleGroupPrimitive.Root>
-));
+  );
+
+  if (type === "single") {
+    return (
+      <ToggleGroupPrimitive.Root
+        {...props}
+        ref={ref}
+        type="single"
+        className={cn("flex items-center justify-center gap-1", className)}
+      >
+        {content}
+      </ToggleGroupPrimitive.Root>
+    );
+  }
+
+  return (
+    <ToggleGroupPrimitive.Root
+      {...props}
+      ref={ref}
+      type="multiple"
+      className={cn("flex items-center justify-center gap-1", className)}
+    >
+      {content}
+    </ToggleGroupPrimitive.Root>
+  );
+});
 
 ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName;
 
@@ -52,8 +81,8 @@ const ToggleGroupItem = React.forwardRef<
       value={value}
       className={cn(
         toggleVariants({
-          variant: context["variant"] ?? variant,
-          size: context["size"] ?? size,
+          variant: context.variant ?? variant,
+          size: context.size ?? size,
         }),
         className,
       )}
