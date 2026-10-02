@@ -41,7 +41,7 @@ function ErrorComponent({ error, reset }: import("@tanstack/react-router").Error
   const router = useRouter();
   useEffect(() => {
     // A stale/aborted JS chunk after a new deploy: reload once to fetch the fresh build.
-    if (typeof window !== "undefined" && CHUNK_ERROR.test(error?.message ?? "")) {
+    if (typeof window !== "undefined" && CHUNK_ERROR.test(String((error as Error)?.message ?? ""))) {
       const key = "sao-chunk-reload";
       if (!sessionStorage.getItem(key)) {
         sessionStorage.setItem(key, "1");
