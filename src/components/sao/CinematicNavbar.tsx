@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import travelLogo from "@/assets/sao-main-logo.png.asset.json";
+import travelLogo from "@/assets/sao-logo-color.png.asset.json";
 import { Button } from "@/components/ui/button";
 
 const HOME_LINKS = [
@@ -77,7 +77,7 @@ export function CinematicNavbar() {
       <div className="sao-container flex h-24 items-center justify-between gap-6">
         <Link to="/" aria-label="SAO Global Travel — accueil" className="relative z-[82] shrink-0">
           <span className="grid h-16 w-32 place-items-center overflow-hidden rounded-md bg-background/95 px-2 shadow-sm md:w-36">
-            <img src={travelLogo.url} alt="SAO Global Travel" width={1536} height={1024} className="h-14 w-auto object-contain" />
+            <img src={travelLogo.url} alt="SAO Global Travel" width={1403} height={848} className="h-14 w-auto object-contain" />
           </span>
         </Link>
 

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X, Phone, ChevronDown, UserRound } from "lucide-react";
 import { useState } from "react";
-import travelLogo from "@/assets/sao-main-logo.png.asset.json";
+import travelLogo from "@/assets/sao-logo-color.png.asset.json";
 import { NAV_GROUPS } from "@/lib/site-nav";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -30,8 +30,8 @@ export function Navbar({ solid = false }: Props) {
           <img
             src={travelLogo.url}
             alt="SAO Global Travel"
-            width={1536}
-            height={1024}
+            width={1403}
+            height={848}
             className="h-14 w-auto object-contain lg:h-16"
           />
         </Link>
