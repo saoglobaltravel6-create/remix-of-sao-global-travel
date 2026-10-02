@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const Input = z.object({ text: z.string().trim().min(3).max(400), iatas: z.array(z.string()).max(40) });
+type Fields = { depart?: string; iata?: string; aller?: string; retour?: string; passagers?: number; classe?: string };
 
 /** Transforme une phrase libre en champs de réservation (destination, dates, passagers, classe). */
 export const parseBooking = createServerFn({ method: "POST" })
@@ -9,27 +10,29 @@ export const parseBooking = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) return { ok: false as const, error: "Assistant indisponible." };
-    const today = new Date().toISOString().slice(0, 10);
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        response_format: { type: "json_object" },
-        messages: [
-          { role: "system", content: `Aujourd'hui: ${today}. Extrais une réservation en JSON {"depart":"NDJ"|"DSS","iata":code parmi [${data.iatas.join(",")}] ou "","aller":"YYYY-MM-DD" ou "","retour":"YYYY-MM-DD" ou "","passagers":nombre,"classe":"Économique"|"Premium économique"|"Affaires"|"Première"}. Valeurs par défaut: NDJ, 1, Économique.` },
-          { role: "user", content: data.text },
-        ],
-      }),
+    const { generateText } = await import("ai");
+    const { createOpenAI } = await import("@ai-sdk/openai");
+    const lovable = createOpenAI({
+      baseURL: "https://ai.gateway.lovable.dev/v1",
+      apiKey: key,
+      headers: { "Lovable-API-Key": key, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
     });
-    if (res.status === 429) return { ok: false as const, error: "Trop de demandes, réessayez." };
-    if (res.status === 402) return { ok: false as const, error: "Crédits IA épuisés." };
-    if (!res.ok) return { ok: false as const, error: "Assistant indisponible." };
+    const today = new Date().toISOString().slice(0, 10);
     try {
-      const j = await res.json();
-      const p = JSON.parse(j.choices[0].message.content);
-      return { ok: true as const, fields: p as { depart?: string; iata?: string; aller?: string; retour?: string; passagers?: number; classe?: string } };
-    } catch {
-      return { ok: false as const, error: "Demande non comprise, reformulez." };
+      const r = await generateText({
+        model: lovable.responses("openai/gpt-6-astra"),
+        system: `Aujourd'hui: ${today}. Réponds UNIQUEMENT par un objet JSON {"depart":"NDJ"|"DSS","iata":code parmi [${data.iatas.join(",")}] ou "","aller":"YYYY-MM-DD" ou "","retour":"YYYY-MM-DD" ou "","passagers":nombre,"classe":"Économique"|"Premium économique"|"Affaires"|"Première"}. Défauts: NDJ, 1, Économique.`,
+        prompt: data.text,
+        maxRetries: 0,
+        providerOptions: { openai: { forceReasoning: true, reasoningEffort: "low", store: false, include: ["reasoning.encrypted_content"] } },
+      });
+      const m = r.text.match(/\{[\s\S]*\}/);
+      if (!m) return { ok: false as const, error: "Demande non comprise, reformulez." };
+      return { ok: true as const, fields: JSON.parse(m[0]) as Fields };
+    } catch (e: unknown) {
+      const s = (e as { statusCode?: number })?.statusCode;
+      if (s === 429) return { ok: false as const, error: "Trop de demandes, réessayez." };
+      if (s === 402) return { ok: false as const, error: "Crédits IA épuisés." };
+      return { ok: false as const, error: "Assistant indisponible." };
     }
   });
