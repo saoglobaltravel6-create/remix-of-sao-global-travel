@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
-import travelLogo from "@/assets/sao-main-logo.png.asset.json";
+import travelLogo from "@/assets/sao-logo-white.png.asset.json";
 import { Marquee } from "@/components/sao/Marquee";
 import { NAV_GROUPS } from "@/lib/site-nav";
 

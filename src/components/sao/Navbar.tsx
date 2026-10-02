@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X, Phone, ChevronDown, UserRound } from "lucide-react";
 import { useState } from "react";
-import travelLogo from "@/assets/sao-main-logo.png.asset.json";
+import travelLogo from "@/assets/sao-logo-color.png.asset.json";
 import { NAV_GROUPS } from "@/lib/site-nav";
 import { useAuth } from "@/hooks/use-auth";
 
