@@ -5,6 +5,9 @@ import { PageShell, Section, DemoNote } from "@/components/sao/PageShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { DESTINATIONS } from "@/lib/destinations";
+import { useServerFn } from "@tanstack/react-start";
+import { parseBooking } from "@/lib/booking-assistant.functions";
+import { quote, fcfa, FARE_SOURCE } from "@/lib/fares";
 import heroImg from "@/assets/hero-airport.jpg";
 
 export const Route = createFileRoute("/reservation")({
@@ -23,17 +26,37 @@ export const Route = createFileRoute("/reservation")({
 
 const STEPS = ["Destination", "Date", "Classe", "Paiement", "Confirmation"];
 const CLASSES = ["Économique", "Premium économique", "Affaires", "Première"];
-const PAYMENTS = ["En agence (N'Djamena ou Dakar)", "Mobile money", "Virement bancaire"];
+const PAYMENTS = ["SAO Money", "En agence (N'Djamena ou Dakar)", "Mobile money", "Virement bancaire"];
 
 function ReservationPage() {
   const { user, loading } = useAuth();
   const [step, setStep] = useState(0);
-  const [v, setV] = useState({ depart: "N'Djamena (NDJ)", destination: "", aller: "", retour: "", passagers: "1", classe: CLASSES[0]!, paiement: PAYMENTS[0]! });
+  const [v, setV] = useState({ depart: "N'Djamena (NDJ)", destination: "", aller: "", retour: "", passagers: "1", nuits: "0", classe: CLASSES[0]!, paiement: PAYMENTS[0]! });
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [ref, setRef] = useState<string | null>(null);
   const set = (k: keyof typeof v) => (e: { target: { value: string } }) => setV((s) => ({ ...s, [k]: e.target.value }));
 
+  const iata = v.destination.match(/\(([A-Z]{3})\)/)?.[1] ?? "";
+  const q = iata ? quote(iata, v.classe, Number(v.passagers) || 1, Number(v.nuits) || 0) : null;
+  const askAI = useServerFn(parseBooking);
+  const [aiText, setAiText] = useState("");
+  const [aiBusy, setAiBusy] = useState(false);
+  const [aiMsg, setAiMsg] = useState<string | null>(null);
+  async function runAI() {
+    setAiBusy(true); setAiMsg(null);
+    const r = await askAI({ data: { text: aiText, iatas: DESTINATIONS.map((d) => d.iata) } });
+    setAiBusy(false);
+    if (!r.ok) return setAiMsg(r.error);
+    const f = r.fields; const d = DESTINATIONS.find((x) => x.iata === f.iata);
+    setV((s) => ({ ...s,
+      depart: f.depart === "DSS" ? "Dakar (DSS)" : "N'Djamena (NDJ)",
+      destination: d ? `${d.city} (${d.iata})` : s.destination,
+      aller: f.aller || s.aller, retour: f.retour || s.retour,
+      passagers: String(f.passagers || s.passagers),
+      classe: CLASSES.includes(f.classe ?? "") ? f.classe! : s.classe }));
+    setAiMsg("Champs pré-remplis : vérifiez chaque étape.");
+  }
   const canNext = [v.destination, v.aller && Number(v.passagers) > 0, v.classe, v.paiement][step];
   const input = "h-12 w-full rounded-xl border border-border bg-secondary/50 px-4 text-sm text-sao-navy outline-none focus:ring-2 focus:ring-ring";
 
@@ -43,11 +66,14 @@ function ReservationPage() {
     setError(null);
     const { data, error: err } = await supabase
       .from("service_requests")
-      .insert({ user_id: user.id, service: "vols", details: { ...v, origine: "reservation", history: [{ status: "recue", at: new Date().toISOString() }] } })
+      .insert({ user_id: user.id, service: "vols", details: { ...v, tarif_vol: q?.vol ?? null, tarif_hotel: q?.hotel ?? null, total_fcfa: q?.total ?? null, origine: "reservation", history: [{ status: "recue", at: new Date().toISOString() }] } })
       .select("reference")
       .single();
     setSending(false);
     if (err) return setError(err.message);
+    if (v.paiement === "SAO Money" && q) {
+      await supabase.from("wallet_transactions").insert({ user_id: user.id, kind: "paiement_reservation", amount: q.total, currency: "XAF", beneficiary: `Réservation ${data.reference}`, status: "en_attente" });
+    }
     setRef(data.reference);
     setStep(4);
   }
@@ -77,13 +103,23 @@ function ReservationPage() {
             <Check className="size-6 text-sao-gold" aria-hidden="true" />
             <h3 className="mt-3 font-bold text-sao-navy">Demande de réservation enregistrée</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Référence <strong>{ref}</strong> — {v.depart} → {v.destination}, le {v.aller}, {v.passagers} passager(s), classe {v.classe}, paiement : {v.paiement}.
+              Référence <strong>{ref}</strong> — {v.depart} → {v.destination}, le {v.aller}, {v.passagers} passager(s), classe {v.classe}, paiement : {v.paiement}{q ? ` — total estimé ${fcfa(q.total)}` : ""}.
               Le billet n'est pas encore émis : un conseiller vous contacte avec le tarif réel avant tout paiement.
             </p>
             <Link to="/espace-client" className="mt-4 inline-flex rounded-full bg-sao-gold px-5 py-3 text-sm font-semibold text-sao-navy">Suivre dans mon espace client</Link>
           </div>
         ) : (
           <div className="sao-card p-6">
+            {step === 0 && (
+              <div className="mb-5 rounded-xl bg-secondary/60 p-4">
+                <p className="text-xs font-semibold text-sao-navy">Assistant réservation — décrivez votre voyage en une phrase</p>
+                <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+                  <input className={input} value={aiText} onChange={(e) => setAiText(e.target.value)} placeholder="Ex : 2 personnes Dakar → Paris le 15 décembre, en affaires" />
+                  <button type="button" disabled={aiBusy || aiText.trim().length < 3} onClick={runAI} className="inline-flex items-center justify-center gap-2 rounded-full bg-sao-navy px-5 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-50">{aiBusy && <Loader2 className="size-4 animate-spin" aria-hidden="true" />}Remplir</button>
+                </div>
+                {aiMsg && <p className="mt-2 text-xs text-muted-foreground">{aiMsg}</p>}
+              </div>
+            )}
             {step === 0 && (
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block text-xs font-medium text-muted-foreground">Départ
@@ -100,9 +136,10 @@ function ReservationPage() {
               </div>
             )}
             {step === 1 && (
-              <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-4">
                 <label className="block text-xs font-medium text-muted-foreground">Aller<input type="date" className={`${input} mt-1.5`} value={v.aller} onChange={set("aller")} /></label>
                 <label className="block text-xs font-medium text-muted-foreground">Retour (facultatif)<input type="date" className={`${input} mt-1.5`} value={v.retour} onChange={set("retour")} /></label>
+                <label className="block text-xs font-medium text-muted-foreground">Nuits d'hôtel<input type="number" min={0} className={`${input} mt-1.5`} value={v.nuits} onChange={set("nuits")} /></label>
                 <label className="block text-xs font-medium text-muted-foreground">Passagers<input type="number" min={1} className={`${input} mt-1.5`} value={v.passagers} onChange={set("passagers")} /></label>
               </div>
             )}
@@ -122,8 +159,16 @@ function ReservationPage() {
                     <input type="radio" name="paiement" className="mr-2" checked={v.paiement === p} onChange={() => setV((s) => ({ ...s, paiement: p }))} />{p}
                   </label>
                 ))}
-                <DemoNote>Le paiement en ligne n'est pas encore activé : vous réglez après confirmation du tarif par un conseiller.</DemoNote>
+                <DemoNote>Avec SAO Money, un paiement « en attente » est créé dans votre portefeuille puis validé par l'équipe SAO. Aucune carte bancaire n'est débitée en ligne.</DemoNote>
               </fieldset>
+            )}
+            {q && step >= 1 && (
+              <div className="mt-5 rounded-xl border border-sao-gold/50 bg-sao-gold/10 p-4 text-sm text-sao-navy">
+                <p>Vol ({v.classe}, {v.passagers} pax) : <strong>{fcfa(q.vol)}</strong></p>
+                {q.hotel > 0 && <p>Hôtel ({v.nuits} nuit·s) : <strong>{fcfa(q.hotel)}</strong></p>}
+                <p className="mt-1 text-base font-bold">Total estimé : {fcfa(q.total)}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{FARE_SOURCE} Frais de service SAO inclus.</p>
+              </div>
             )}
             {error && <p className="mt-4 text-sm text-destructive">Envoi impossible : {error}</p>}
             <div className="mt-6 flex gap-3">
