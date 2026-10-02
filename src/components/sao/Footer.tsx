@@ -10,12 +10,12 @@ export function Footer() {
       <Marquee />
       <div className="sao-container grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="inline-flex rounded-2xl bg-background p-3">
+          <div className="inline-flex">
             <img
               src={travelLogo.url}
               alt="SAO Global Travel"
-              width={1536}
-              height={1024}
+              width={1419}
+              height={863}
               className="h-20 w-auto object-contain"
               loading="lazy"
             />

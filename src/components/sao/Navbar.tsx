@@ -30,8 +30,8 @@ export function Navbar({ solid = false }: Props) {
           <img
             src={travelLogo.url}
             alt="SAO Global Travel"
-            width={1536}
-            height={1024}
+            width={1403}
+            height={848}
             className="h-14 w-auto object-contain lg:h-16"
           />
         </Link>

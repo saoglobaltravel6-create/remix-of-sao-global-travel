@@ -1,3 +1,4 @@
+import { ScrollEdgeBlur } from "@/components/sao/ScrollEdgeBlur";
 import { useState } from "react";
 import { Plane, Luggage, Package, Ship, Bus, CircleDollarSign, Search } from "lucide-react";
 import { DemoBadge } from "./DemoBadge";
@@ -94,6 +95,8 @@ export function SearchEngine() {
   return (
     <section id="moteur" className="sao-container -mt-16 md:-mt-20 relative z-20">
       <div className="sao-card overflow-hidden">
+        <div className="relative">
+        <ScrollEdgeBlur side="right" className="w-10 md:hidden" />
         <div className="flex gap-1 overflow-x-auto border-b border-border px-3 pt-3 md:px-6">
           {TABS.map((t) => {
             const Icon = t.icon;
@@ -114,6 +117,7 @@ export function SearchEngine() {
               </button>
             );
           })}
+        </div>
         </div>
 
         <div key={active} className="p-5 md:p-6" style={{ animation: "fadeInSoft .35s var(--ease-soft) both" }}>
