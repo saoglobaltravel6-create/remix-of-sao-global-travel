@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Build the TanStack Start server for Netlify instead of the Cloudflare default
+  NITRO_PRESET = "netlify"
+  NPM_FLAGS = "--legacy-peer-deps"
