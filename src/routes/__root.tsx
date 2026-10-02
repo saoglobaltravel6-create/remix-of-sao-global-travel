@@ -36,7 +36,7 @@ function NotFoundComponent() {
 
 const CHUNK_ERROR = /importing a module script failed|failed to fetch dynamically imported module|error loading dynamically imported module|imported module .* does not provide/i;
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: import("@tanstack/react-router").ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
