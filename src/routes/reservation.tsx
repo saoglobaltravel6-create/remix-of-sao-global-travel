@@ -67,7 +67,7 @@ function ReservationPage() {
     const { data, error: err } = await supabase
       .from("service_requests")
       .insert({ user_id: user.id, service: "vols", details: { ...v, tarif_vol: q?.vol ?? null, tarif_hotel: q?.hotel ?? null, total_fcfa: q?.total ?? null, origine: "reservation", history: [{ status: "recue", at: new Date().toISOString() }] } })
-      .select("reference")
+      .select("id, reference")
       .single();
     setSending(false);
     if (err) return setError(err.message);
