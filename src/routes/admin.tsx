@@ -30,6 +30,7 @@ function AdminPage() {
   const [reqs, setReqs] = useState<any[]>([]);
   const [txs, setTxs] = useState<any[]>([]);
   const [tab, setTab] = useState<"req" | "tx">("req");
+  const [actionError, setActionError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const [r, t] = await Promise.all([
@@ -54,7 +55,16 @@ function AdminPage() {
     load();
   }
   async function setTxStatus(t: any, status: string) {
-    await supabase.from("wallet_transactions").update({ status }).eq("id", t.id);
+    if (t.status !== "en_attente") return;
+    setActionError(null);
+    const { error } = await supabase.rpc("admin_set_transaction_status", {
+      _transaction_id: t.id,
+      _status: status,
+    });
+    if (error) {
+      setActionError(error.message.includes("insuffisant") ? "Validation impossible : solde SAO Money insuffisant." : error.message);
+      return;
+    }
     load();
   }
 
@@ -72,6 +82,7 @@ function AdminPage() {
           <button onClick={() => setTab("req")} className={`rounded-full px-4 py-2 text-sm font-semibold ${tab === "req" ? "bg-sao-navy text-primary-foreground" : "bg-secondary text-sao-navy"}`}>Réservations & demandes ({reqs.length})</button>
           <button onClick={() => setTab("tx")} className={`rounded-full px-4 py-2 text-sm font-semibold ${tab === "tx" ? "bg-sao-navy text-primary-foreground" : "bg-secondary text-sao-navy"}`}>SAO Money ({txs.length})</button>
         </div>
+        {actionError && <p className="mb-4 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{actionError}</p>}
         <div className="space-y-3">
           {tab === "req"
             ? reqs.map((r) => (
@@ -97,8 +108,8 @@ function AdminPage() {
                     <strong className="text-sao-navy">{t.kind} · {Number(t.amount).toLocaleString("fr-FR")} {t.currency}</strong>
                     <p className="text-xs text-muted-foreground">{t.beneficiary ?? "—"} · {fmt(t.created_at)} · mis à jour {fmt(t.updated_at)}{t.is_real ? "" : " · démonstration"}</p>
                   </div>
-                  <select className={sel} value={t.status} onChange={(e) => setTxStatus(t, e.target.value)} aria-label="Statut">
-                    {TX_STATUS.map((s) => <option key={s}>{s}</option>)}
+                  <select className={sel} value={t.status} disabled={t.status !== "en_attente"} onChange={(e) => setTxStatus(t, e.target.value)} aria-label="Statut">
+                    {(t.status === "en_attente" ? TX_STATUS : [t.status]).map((s) => <option key={s}>{s}</option>)}
                   </select>
                 </article>
               ))}

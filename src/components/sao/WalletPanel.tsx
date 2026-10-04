@@ -16,6 +16,7 @@ type Tx = {
 
 const STATUS: Record<string, { label: string; cls: string }> = {
   en_attente: { label: "En attente", cls: "bg-sao-gold/15 text-sao-navy" },
+  validee: { label: "Validée", cls: "bg-emerald-500/15 text-emerald-700" },
   reussie: { label: "Réussie", cls: "bg-emerald-500/15 text-emerald-700" },
   echouee: { label: "Échouée", cls: "bg-destructive/10 text-destructive" },
 };
@@ -71,9 +72,8 @@ export function WalletPanel() {
         <p className="mt-4 flex items-start gap-2 rounded-2xl border border-sao-gold/40 bg-sao-gold/10 p-4 text-sm text-sao-navy">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-sao-gold" aria-hidden="true" />
           <span>
-            Le prestataire de paiement n'est pas encore connecté. Vos opérations sont enregistrées
-            avec le statut « en attente » et ne sont ni débitées, ni créditées, ni confirmées tant
-            qu'un règlement réel n'a pas eu lieu.
+            Le portefeuille interne est actif : une opération reste « en attente » jusqu'à sa validation
+            par l'équipe SAO. Aucun prestataire bancaire ou mobile money externe n'est connecté.
           </span>
         </p>
 
@@ -89,7 +89,6 @@ export function WalletPanel() {
               amount: Number(amount),
               beneficiary: beneficiary || null,
               status: "en_attente",
-              is_real: false,
             });
             if (err) setError(err.message);
             else {

@@ -147,6 +147,7 @@ export type Database = {
           id: string
           is_real: boolean
           kind: string
+          service_request_id: string | null
           status: string
           updated_at: string
           user_id: string
@@ -160,6 +161,7 @@ export type Database = {
           id?: string
           is_real?: boolean
           kind: string
+          service_request_id?: string | null
           status?: string
           updated_at?: string
           user_id: string
@@ -173,11 +175,20 @@ export type Database = {
           id?: string
           is_real?: boolean
           kind?: string
+          service_request_id?: string | null
           status?: string
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "wallet_transactions_service_request_id_fkey"
+            columns: ["service_request_id"]
+            isOneToOne: false
+            referencedRelation: "service_requests"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       wallets: {
         Row: {
@@ -211,6 +222,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_set_transaction_status: {
+        Args: { _status: string; _transaction_id: string }
+        Returns: {
+          status: string
+          transaction_id: string
+          wallet_balance: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

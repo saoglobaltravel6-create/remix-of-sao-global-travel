@@ -15,6 +15,13 @@
       "when": 1790914713482,
       "tag": "0001_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791073983090,
+      "tag": "0002_secure_sao_money_settlement",
+      "breakpoints": true
     }
   ]
 }
