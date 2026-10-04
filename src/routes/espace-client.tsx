@@ -214,8 +214,8 @@ function EspaceClient() {
             {wallet ? `${wallet.balance.toLocaleString("fr-FR")} ${wallet.currency}` : "—"}
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Aucun paiement en ligne n'est encore branché : le solde ne bouge qu'après une opération
-            confirmée par nos équipes.
+            Le solde évolue uniquement après validation sécurisée par l'équipe SAO. Aucun débit bancaire
+            ou mobile money externe n'est effectué depuis ce portefeuille.
           </p>
           <Link to="/saomoney" className="mt-4 inline-flex items-center rounded-full bg-sao-gold px-5 py-3 text-sm font-semibold text-sao-navy">
             Ouvrir SAO Money

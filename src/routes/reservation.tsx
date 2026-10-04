@@ -72,7 +72,15 @@ function ReservationPage() {
     setSending(false);
     if (err) return setError(err.message);
     if (v.paiement === "SAO Money" && q) {
-      await supabase.from("wallet_transactions").insert({ user_id: user.id, kind: "paiement_reservation", amount: q.total, currency: "XAF", beneficiary: `Réservation ${data.reference}`, status: "en_attente" });
+      const { error: paymentError } = await supabase.from("wallet_transactions").insert({
+        user_id: user.id,
+        kind: "paiement_reservation",
+        amount: q.total,
+        currency: "XAF",
+        beneficiary: `Réservation ${data.reference}`,
+        service_request_id: data.id,
+      });
+      if (paymentError) return setError(`Réservation enregistrée, mais paiement SAO Money non créé : ${paymentError.message}`);
     }
     setRef(data.reference);
     setStep(4);
@@ -159,7 +167,7 @@ function ReservationPage() {
                     <input type="radio" name="paiement" className="mr-2" checked={v.paiement === p} onChange={() => setV((s) => ({ ...s, paiement: p }))} />{p}
                   </label>
                 ))}
-                <DemoNote>Avec SAO Money, un paiement « en attente » est créé dans votre portefeuille puis validé par l'équipe SAO. Aucune carte bancaire n'est débitée en ligne.</DemoNote>
+                <DemoNote>Avec SAO Money, le montant est réservé dans votre portefeuille puis débité uniquement après validation dans l'administration. Un solde insuffisant bloque la validation. Il ne s'agit pas d'un débit bancaire ou mobile money externe.</DemoNote>
               </fieldset>
             )}
             {q && step >= 1 && (

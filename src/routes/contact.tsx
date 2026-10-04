@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
 import { PageShell, Section, DemoNote } from "@/components/sao/PageShell";
 import europe from "@/assets/dest-europe.jpg";
 
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const [prepared, setPrepared] = useState(false);
   return (
     <PageShell
       kicker="SAO"
@@ -74,7 +76,8 @@ function ContactPage() {
             e.preventDefault();
             const data = new FormData(e.currentTarget);
             const body = `Nom: ${data.get("name")}\nE-mail: ${data.get("email")}\nTéléphone: ${data.get("phone")}\n\n${data.get("message")}`;
-            window.location.href = `mailto:contact@saoglobaltravel.com?subject=${encodeURIComponent("Demande via le site SAO Global Travel")}&body=${encodeURIComponent(body)}`;
+            setPrepared(true);
+            window.location.href = `mailto:contact@saoglobaltravel.com?subject=${encodeURIComponent(String(data.get("subject") || "Demande via le site SAO Global Travel"))}&body=${encodeURIComponent(body)}`;
           }}
         >
           <label className="grid gap-1.5 text-sm font-medium text-sao-navy">
@@ -104,9 +107,11 @@ function ContactPage() {
             Envoyer le message
           </button>
           <p className="text-xs text-muted-foreground sm:col-span-2">
-            Ce formulaire ouvre votre messagerie avec le message pré-rempli.
+            Ce formulaire ouvre votre messagerie avec le message pré-rempli. L'envoi direct depuis le site sera activé après validation du domaine d'expédition.
           </p>
+          {prepared && <p role="status" className="flex items-center gap-2 text-sm text-sao-navy sm:col-span-2"><CheckCircle2 className="size-4 text-sao-gold" /> Message préparé dans votre messagerie. Vérifiez puis envoyez-le.</p>}
         </form>
+        <DemoNote>Blocage actuel : saoglobaltravel.com n'est ni associé à ce projet ni validé comme domaine d'envoi. Les enregistrements DNS de propriété et de délivrabilité doivent être ajoutés avant l'envoi transactionnel réel.</DemoNote>
       </Section>
     </PageShell>
   );
