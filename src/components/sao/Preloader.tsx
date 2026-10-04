@@ -7,6 +7,11 @@ export function Preloader() {
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
+    if (document.documentElement.dataset['saoReady'] === "true" || sessionStorage.getItem("sao-preloader-seen") === "true") {
+      document.documentElement.dataset['saoReady'] = "true";
+      setGone(true);
+      return;
+    }
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       document.documentElement.dataset['saoReady'] = "true";
@@ -23,6 +28,7 @@ export function Preloader() {
         window.setTimeout(() => setLifting(true), 260);
         window.setTimeout(() => {
           document.documentElement.dataset['saoReady'] = "true";
+          sessionStorage.setItem("sao-preloader-seen", "true");
           setGone(true);
         }, 1180);
       }

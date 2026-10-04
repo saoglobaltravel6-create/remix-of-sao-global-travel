@@ -1,5 +1,5 @@
 import { ScrollEdgeBlur } from "@/components/sao/ScrollEdgeBlur";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plane, Luggage, Package, Ship, Bus, CircleDollarSign, Search } from "lucide-react";
 import { DemoBadge } from "./DemoBadge";
 
@@ -90,7 +90,19 @@ const DEMO_FLIGHTS = [
 
 export function SearchEngine() {
   const [active, setActive] = useState("vol");
+  const [destination, setDestination] = useState("");
   const tab = TABS.find((t) => t.id === active)!;
+
+  useEffect(() => {
+    const receiveDestination = (event: Event) => {
+      const iata = (event as CustomEvent<string>).detail;
+      if (!iata) return;
+      setActive("vol");
+      setDestination(iata);
+    };
+    window.addEventListener("sao:destination", receiveDestination);
+    return () => window.removeEventListener("sao:destination", receiveDestination);
+  }, []);
 
   return (
     <section id="moteur" className="sao-container -mt-16 md:-mt-20 relative z-20">
@@ -128,6 +140,8 @@ export function SearchEngine() {
                 <input
                   type={f.type ?? "text"}
                   placeholder={f.placeholder}
+                  value={active === "vol" && f.label === "Destination" ? destination : undefined}
+                  onChange={active === "vol" && f.label === "Destination" ? (event) => setDestination(event.target.value) : undefined}
                   className="h-11 w-full rounded-xl border border-input bg-secondary/60 px-3 text-base text-sao-navy outline-none transition-shadow placeholder:text-muted-foreground/70 focus:ring-2 focus:ring-ring"
                 />
               </label>
