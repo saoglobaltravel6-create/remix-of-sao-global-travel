@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+ 
+- Embed the flight radar through the isolated FlightRadar component on Suivi; OpenSky controls zoom/pan, and iframe loading never proves live telemetry, because cross-origin content cannot be inspected reliably.
