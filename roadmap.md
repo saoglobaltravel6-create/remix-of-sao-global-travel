@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Intégrer le radar OpenSky à Suivi avec actualisation, plein écran et secours externe
+- [ ] Vérifier le radar à 390/1280 px et ses commandes
+
 - [ ] Corriger et valider logos + flou à 390/1280 px
 - [ ] Sécuriser la validation SAO Money et la synchronisation réservation/admin
 - [ ] Limiter le rôle administrateur au compte demandé

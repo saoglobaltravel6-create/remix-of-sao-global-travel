@@ -5,20 +5,21 @@ import { PageShell, Section, DemoNote, CtaBand } from "@/components/sao/PageShel
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import asie from "@/assets/dest-asie.jpg";
+import { FlightRadar } from "@/components/sao/FlightRadar";
 
 export const Route = createFileRoute("/suivi")({
   head: () => ({
     meta: [
-      { title: "Suivi d'envoi — Colis et cargo | SAO Global Travel" },
+      { title: "Suivi des envois et radar aérien | SAO Global Travel" },
       {
         name: "description",
         content:
-          "Suivez un colis ou un envoi cargo SAO Global Travel à partir de sa référence : statut, origine, destination et étapes enregistrées.",
+          "Suivez vos colis et votre cargo SAO avec leur référence, et consultez la carte aérienne mondiale OpenSky Network.",
       },
-      { property: "og:title", content: "Suivi d'envoi — SAO Global Travel" },
+      { property: "og:title", content: "Suivi et Flight Radar — SAO Global Travel" },
       {
         property: "og:description",
-        content: "Retrouvez l'état d'un envoi avec sa référence de suivi.",
+        content: "Retrouvez vos envois SAO et consultez le radar aérien mondial OpenSky Network.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -81,6 +82,9 @@ function SuiviPage() {
       image={asie}
       imageAlt="Centre logistique"
     >
+      <Section>
+        <FlightRadar />
+      </Section>
       <Section title="Rechercher un envoi">
         <form className="sao-card flex flex-col gap-3 p-6 sm:flex-row" onSubmit={search}>
           <label className="sr-only" htmlFor="ref">Référence de suivi</label>
