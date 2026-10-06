@@ -53,32 +53,39 @@ function VolsPage() {
         </DemoNote>
       </Section>
 
-      <Section tone="ivory" title="Comment ça se passe">
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {ETAPES.map(({ icon: Icon, t, d }, i) => (
-            <li key={t} className="sao-card p-6">
-              <span className="text-xs font-bold text-sao-gold">0{i + 1}</span>
-              <Icon className="mt-3 size-6 text-sao-navy" aria-hidden="true" />
-              <h3 className="mt-3 font-bold text-sao-navy">{t}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{d}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      <section className="relative overflow-hidden bg-sao-navy py-20 text-primary-foreground">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 size-[22rem] rounded-full opacity-30 blur-3xl" style={{ background: "color-mix(in oklch, var(--sao-gold) 30%, transparent)" }} />
+        <div className="sao-container relative">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sao-gold">Parcours voyageur</p>
+          <h2 className="mt-3 max-w-2xl font-display text-3xl leading-tight tracking-tight md:text-5xl">Comment ça se passe</h2>
+          <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {ETAPES.map(({ icon: Icon, t, d }, i) => (
+              <li key={t} className="relative rounded-3xl border border-primary-foreground/15 bg-primary-foreground/[0.07] p-6">
+                <span className="absolute right-5 top-4 font-display text-4xl font-bold text-primary-foreground/15" aria-hidden="true">0{i + 1}</span>
+                <span className="inline-flex rounded-2xl border border-sao-gold/40 bg-sao-gold/15 p-3 text-sao-gold">
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <h3 className="mt-5 text-lg font-semibold">{t}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-primary-foreground/75">{d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
       <Section title="Départs fréquents" lead="Les aéroports les plus demandés sur notre réseau.">
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {DESTINATIONS.slice(0, 9).map((d) => (
-            <li key={d.iata} className="sao-card flex items-center justify-between gap-4 p-4">
-              <div className="min-w-0">
-                <p className="truncate font-semibold text-sao-navy">
-                  N'Djamena (NDJ) → {d.city}
-                </p>
-                <p className="truncate text-xs text-muted-foreground">{d.airport}</p>
-              </div>
-              <span className="rounded-full bg-sao-gold/20 px-2.5 py-1 text-xs font-bold text-sao-navy">
+            <li key={d.iata} className="group sao-card flex items-center gap-4 p-4 transition-[border-color,transform] duration-300 hover:border-sao-gold/60 motion-safe:hover:-translate-y-0.5">
+              <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-sao-navy font-display text-base font-bold tracking-wide text-sao-gold">
                 {d.iata}
               </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">NDJ → {d.iata}</p>
+                <p className="truncate font-semibold text-sao-navy">{d.city}</p>
+                <p className="truncate text-xs text-muted-foreground">{d.airport}</p>
+              </div>
+              <Plane className="ml-auto size-4 shrink-0 text-sao-gold transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
             </li>
           ))}
         </ul>
