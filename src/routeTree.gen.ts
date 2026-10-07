@@ -28,6 +28,7 @@ import { Route as SejoursRouteImport } from './routes/sejours'
 import { Route as SolutionsProRouteImport } from './routes/solutions-pro'
 import { Route as SuiviRouteImport } from './routes/suivi'
 import { Route as VolsRouteImport } from './routes/vols'
+import { Route as VolsHistoriquesRouteImport } from './routes/vols-historiques'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +125,11 @@ const VolsRoute = VolsRouteImport.update({
   path: '/vols',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VolsHistoriquesRoute = VolsHistoriquesRouteImport.update({
+  id: '/vols-historiques',
+  path: '/vols-historiques',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/solutions-pro': typeof SolutionsProRoute
   '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
+  '/vols-historiques': typeof VolsHistoriquesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/solutions-pro': typeof SolutionsProRoute
   '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
+  '/vols-historiques': typeof VolsHistoriquesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/solutions-pro': typeof SolutionsProRoute
   '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
+  '/vols-historiques': typeof VolsHistoriquesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/solutions-pro'
     | '/suivi'
     | '/vols'
+    | '/vols-historiques'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/solutions-pro'
     | '/suivi'
     | '/vols'
+    | '/vols-historiques'
   id:
     | '__root__'
     | '/'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/solutions-pro'
     | '/suivi'
     | '/vols'
+    | '/vols-historiques'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   SolutionsProRoute: typeof SolutionsProRoute
   SuiviRoute: typeof SuiviRoute
   VolsRoute: typeof VolsRoute
+  VolsHistoriquesRoute: typeof VolsHistoriquesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/vols-historiques': {
+      id: '/vols-historiques'
+      path: '/vols-historiques'
+      fullPath: '/vols-historiques'
+      preLoaderRoute: typeof VolsHistoriquesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -435,6 +455,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolutionsProRoute: SolutionsProRoute,
   SuiviRoute: SuiviRoute,
   VolsRoute: VolsRoute,
+  VolsHistoriquesRoute: VolsHistoriquesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -9,4 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
  
-- Embed the flight radar through the isolated FlightRadar component on Suivi; OpenSky controls zoom/pan, and iframe loading never proves live telemetry, because cross-origin content cannot be inspected reliably.
+- The Suivi radar is a Leaflet map fed only by server functions in src/lib/opensky.functions.ts (shared cache, 429 backoff, optional OPENSKY_CLIENT_ID/SECRET); never iframe or mock aircraft, because status must reflect the last real request.
+- Observed aircraft are persisted via the service-role-only record_observed_flights RPC (30-min session window per icao24), so history only covers what SAO actually saw.
