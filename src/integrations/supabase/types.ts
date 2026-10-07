@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      observed_flights: {
+        Row: {
+          callsign: string | null
+          created_at: string
+          destination_airport: string | null
+          first_seen_at: string
+          icao24: string
+          id: string
+          last_baro_altitude: number | null
+          last_latitude: number | null
+          last_longitude: number | null
+          last_seen_at: string
+          last_track: number | null
+          last_velocity: number | null
+          on_ground: boolean
+          origin_airport: string | null
+          origin_country: string | null
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          callsign?: string | null
+          created_at?: string
+          destination_airport?: string | null
+          first_seen_at: string
+          icao24: string
+          id?: string
+          last_baro_altitude?: number | null
+          last_latitude?: number | null
+          last_longitude?: number | null
+          last_seen_at: string
+          last_track?: number | null
+          last_velocity?: number | null
+          on_ground?: boolean
+          origin_airport?: string | null
+          origin_country?: string | null
+          source?: string
+          updated_at?: string
+        }
+        Update: {
+          callsign?: string | null
+          created_at?: string
+          destination_airport?: string | null
+          first_seen_at?: string
+          icao24?: string
+          id?: string
+          last_baro_altitude?: number | null
+          last_latitude?: number | null
+          last_longitude?: number | null
+          last_seen_at?: string
+          last_track?: number | null
+          last_velocity?: number | null
+          on_ground?: boolean
+          origin_airport?: string | null
+          origin_country?: string | null
+          source?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           city: string | null
@@ -237,6 +297,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      record_observed_flights: { Args: { _states: Json }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

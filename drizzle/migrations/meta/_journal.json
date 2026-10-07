@@ -22,6 +22,13 @@
       "when": 1791073983090,
       "tag": "0002_secure_sao_money_settlement",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791336791699,
+      "tag": "0003_observed_flights",
+      "breakpoints": true
     }
   ]
 }
