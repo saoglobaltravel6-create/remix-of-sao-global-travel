@@ -5,7 +5,7 @@ import type * as Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Activity, ChevronLeft, ChevronRight, Globe2, History, LocateFixed, Maximize, Minimize, Plane, RefreshCw, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getFlightDetails, getRadarStates, type AircraftTuple, type FlightDetails, type RadarResponse } from "@/lib/opensky.functions";
+import { getFlightDetails, getRadarStates, RADAR_REGIONS, type RadarRegion, type AircraftTuple, type FlightDetails, type RadarResponse } from "@/lib/opensky.functions";
 
 const POLL_MS = 90_000;
 const MANUAL_COOLDOWN_MS = 20_000;
@@ -20,6 +20,25 @@ const STATUS_LABEL: Record<string, string> = {
   ok: "Connexion OK", rate_limited: "Limite atteinte", unauthorized: "Accès refusé",
   unavailable: "Service indisponible", invalid: "Réponse invalide", network: "Réseau indisponible",
 };
+
+function regionFor(map: Leaflet.Map): RadarRegion {
+  if (map.getZoom() < 4) return "world";
+  const c = map.getCenter();
+  const lng = ((c.lng + 540) % 360) - 180;
+  for (const [k, v] of Object.entries(RADAR_REGIONS)) {
+    const b = v.box;
+    if (b && c.lat >= b[0] && c.lat <= b[2] && lng >= b[1] && lng <= b[3]) return k as RadarRegion;
+  }
+  return "world";
+}
+
+function clusterIcon(L: typeof Leaflet, n: number) {
+  const size = n > 200 ? 46 : n > 50 ? 38 : 30;
+  return L.divIcon({
+    className: "sao-cluster-icon", iconSize: [size, size], iconAnchor: [size / 2, size / 2],
+    html: `<div style="width:${size}px;height:${size}px;border-radius:50%;display:grid;place-items:center;background:rgba(11,27,69,.85);border:2px solid #F6C10D;color:#F6C10D;font:600 12px system-ui">${n}</div>`,
+  });
+}
 
 function planeIcon(L: typeof Leaflet, track: number | null, ground: boolean, selected: boolean) {
   const color = selected ? "var(--sao-red, #E31B23)" : ground ? "#8a94a8" : "var(--sao-gold, #F6C10D)";
@@ -58,12 +77,14 @@ export function FlightRadar() {
   const [mapReady, setMapReady] = useState(false);
   const [mapVersion, setMapVersion] = useState(0);
   const [shown, setShown] = useState(0);
+  const [region, setRegion] = useState<RadarRegion>("world");
+  const regionRef = useRef<RadarRegion>("world");
 
   const load = useCallback(async () => {
     setSyncing(true);
     setLastAttempt(Date.now());
     try {
-      const r = await fetchStates();
+      const r = await fetchStates({ data: { region: regionRef.current } });
       setData(r);
       setClientError(null);
       const wait = r.retryAfterSec ? Math.max(r.retryAfterSec * 1000, POLL_MS) : POLL_MS;
@@ -89,7 +110,7 @@ export function FlightRadar() {
     };
     tick();
     return () => { stop = true; window.clearTimeout(timer); };
-  }, [load]);
+  }, [load, region]);
 
   useEffect(() => { const t = window.setInterval(() => setNow(Date.now()), 1000); return () => window.clearInterval(t); }, []);
 
@@ -111,7 +132,11 @@ export function FlightRadar() {
         maxZoom: 12, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Données aéronefs <a href="https://opensky-network.org">OpenSky Network</a>',
       }).addTo(map);
       layerRef.current = L.layerGroup().addTo(map);
-      map.on("moveend", () => setMapVersion((v) => v + 1));
+      map.on("moveend", () => {
+        setMapVersion((v) => v + 1);
+        const r = regionFor(map);
+        if (r !== regionRef.current) { regionRef.current = r; setRegion(r); }
+      });
       mapRef.current = map;
       setMapReady(true);
     });
@@ -128,6 +153,30 @@ export function FlightRadar() {
     layer.clearLayers();
     const b = map.getBounds().pad(0.1);
     let n = 0;
+    const zoom = map.getZoom();
+    if (zoom < 5) {
+      // Grid clustering: one numbered circle per cell at low zoom.
+      const cell = 360 / Math.pow(2, zoom + 2);
+      const groups = new Map<string, { lat: number; lon: number; n: number }>();
+      for (const a of aircraft) {
+        if (a[5] == null || a[4] == null) continue;
+        if (a[7] && !showGround) continue;
+        if (q && !a[0].includes(q) && !a[1].toLowerCase().includes(q)) continue;
+        if (!b.contains([a[5], a[4]])) continue;
+        const k = `${Math.floor(a[5] / cell)}:${Math.floor(a[4] / cell)}`;
+        const g = groups.get(k) ?? { lat: 0, lon: 0, n: 0 };
+        g.lat += a[5]; g.lon += a[4]; g.n++; groups.set(k, g);
+        n++;
+      }
+      for (const g of groups.values()) {
+        const ll: [number, number] = [g.lat / g.n, g.lon / g.n];
+        L.marker(ll, { icon: clusterIcon(L, g.n), keyboard: false, title: `${g.n} avions` })
+          .on("click", () => map.setView(ll, Math.min(zoom + 2, 8)))
+          .addTo(layer);
+      }
+      setShown(n);
+      return;
+    }
     for (const a of aircraft) {
       if (a[5] == null || a[4] == null) continue;
       if (a[7] && !showGround && a[0] !== selected) continue;
@@ -276,7 +325,7 @@ export function FlightRadar() {
         <details className="border-t border-border px-4 py-3 text-xs md:px-6">
           <summary className="cursor-pointer font-semibold"><Activity className="mr-1 inline size-3.5" aria-hidden="true" />État technique</summary>
           <dl className="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-3">
-            <div><dt className="text-muted-foreground">Source</dt><dd>OpenSky Network /states/all ({data?.authenticated ? "authentifié" : "anonyme"})</dd></div>
+            <div><dt className="text-muted-foreground">Source</dt><dd>OpenSky Network · zone {RADAR_REGIONS[region].label} ({data?.authenticated ? "authentifié" : "anonyme"})</dd></div>
             <div><dt className="text-muted-foreground">Statut API</dt><dd>{statusKey ? STATUS_LABEL[statusKey] : "—"}</dd></div>
             <div><dt className="text-muted-foreground">Horodatage OpenSky</dt><dd>{fmtTime(data?.dataTime ?? null)}{age != null ? ` (il y a ${age}s)` : ""}</dd></div>
             <div><dt className="text-muted-foreground">Latence serveur→OpenSky</dt><dd>{data?.latencyMs != null ? `${data.latencyMs} ms${data.cached ? " (réponse en cache)" : ""}` : NA}</dd></div>

@@ -12,3 +12,6 @@
 - [ ] Ajouter des témoignages explicitement de démonstration
 - [ ] Finaliser Contact et préparer l’envoi réel, bloqué par la validation du domaine
 - [ ] Vérifier métadonnées, erreurs d’exécution et affichage final
+
+- [ ] Krung Travel landing page (Bangkok) — waiting: user to confirm destination (separate project vs page in SAO site)
+- [ ] Radar: dedicated /radar pages, stats, authenticated OpenSky, region cache + clustering

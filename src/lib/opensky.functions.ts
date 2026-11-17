@@ -20,14 +20,26 @@ export type RadarResponse = {
 };
 
 const API = "https://opensky-network.org/api";
-const STATES_TTL_MS = 60_000; // anonymous: ~400 credits/day, global /states/all = 4 credits
 
-// Per-worker cache shared by every visitor hitting this isolate.
-const cache: { last: RadarResponse | null; blockedUntil: number; inflight: Promise<RadarResponse> | null } = {
-  last: null,
-  blockedUntil: 0,
-  inflight: null,
-};
+/** Fixed regions (lamin, lomin, lamax, lomax). Smaller boxes cost fewer OpenSky credits. */
+export const RADAR_REGIONS = {
+  world: { label: "Monde", box: null },
+  africa: { label: "Afrique", box: [-36, -20, 38, 52] },
+  europe: { label: "Europe", box: [34, -25, 72, 45] },
+  middle_east: { label: "Moyen-Orient", box: [12, 32, 42, 64] },
+  asia: { label: "Asie", box: [-12, 60, 56, 150] },
+  americas: { label: "Amériques", box: [-56, -170, 72, -30] },
+  oceania: { label: "Océanie", box: [-50, 110, 0, 180] },
+} as const;
+export type RadarRegion = keyof typeof RADAR_REGIONS;
+
+type RegionCache = { last: RadarResponse | null; inflight: Promise<RadarResponse> | null };
+const caches = new Map<RadarRegion, RegionCache>();
+// 429 blocks the whole account, not one region.
+const limiter = { blockedUntil: 0, day: "", calls: 0 };
+const DAILY_BUDGET_ANON = 380, DAILY_BUDGET_AUTH = 3800;
+const regionCache = (r: RadarRegion) => { let c = caches.get(r); if (!c) { c = { last: null, inflight: null }; caches.set(r, c); } return c; };
+let cache: RegionCache = regionCache("world");
 let token: { value: string; exp: number } | null = null;
 
 async function authHeader(): Promise<Record<string, string>> {
@@ -46,33 +58,51 @@ async function authHeader(): Promise<Record<string, string>> {
   return { Authorization: `Bearer ${token.value}` };
 }
 
-function fromCache(status: RadarStatus, message: string, retryAfterSec: number | null): RadarResponse {
+function fromCache(status: RadarStatus, message: string, retryAfterSec: number | null, c: RegionCache = cache): RadarResponse {
   return {
-    ...(cache.last ?? { aircraft: [], dataTime: null, fetchedAt: null, latencyMs: null, authenticated: false, persisted: "skipped" as const }),
-    status, message, retryAfterSec, cached: !!cache.last, persisted: "skipped",
+    ...(c.last ?? { aircraft: [], dataTime: null, fetchedAt: null, latencyMs: null, authenticated: false, persisted: "skipped" as const }),
+    status, message, retryAfterSec, cached: !!c.last, persisted: "skipped",
   };
 }
 
-async function fetchStates(): Promise<RadarResponse> {
+async function logRequest(region: RadarRegion, r: RadarResponse) {
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin.from("radar_requests" as never).insert({
+      region, status: r.status, latency_ms: r.latencyMs, aircraft_count: r.status === "ok" ? r.aircraft.length : 0, authenticated: r.authenticated,
+    } as never);
+  } catch (e) { console.error("[radar] log failed", e); }
+}
+
+async function fetchStates(region: RadarRegion): Promise<RadarResponse> {
+  const r = await fetchStatesRaw(region);
+  await logRequest(region, r);
+  return r;
+}
+
+async function fetchStatesRaw(region: RadarRegion): Promise<RadarResponse> {
+  const rc = regionCache(region);
   const headers = await authHeader();
+  const box = RADAR_REGIONS[region].box;
+  const qs = box ? `?lamin=${box[0]}&lomin=${box[1]}&lamax=${box[2]}&lomax=${box[3]}` : "";
   const t0 = Date.now();
   let res: Response;
   try {
-    res = await fetch(`${API}/states/all`, { headers, signal: AbortSignal.timeout(20_000) });
+    res = await fetch(`${API}/states/all${qs}`, { headers, signal: AbortSignal.timeout(20_000) });
   } catch (e) {
-    return fromCache("network", `OpenSky injoignable (${e instanceof Error ? e.name : "réseau"})`, null);
+    return fromCache("network", `OpenSky injoignable (${e instanceof Error ? e.name : "réseau"})`, null, rc);
   }
   const latencyMs = Date.now() - t0;
   if (res.status === 429) {
     const ra = Number(res.headers.get("x-rate-limit-retry-after-seconds") ?? res.headers.get("retry-after") ?? 300);
-    cache.blockedUntil = Date.now() + ra * 1000;
-    return fromCache("rate_limited", "Limite de requêtes OpenSky atteinte (429).", ra);
+    limiter.blockedUntil = Date.now() + ra * 1000;
+    return fromCache("rate_limited", "Limite de requêtes OpenSky atteinte (429).", ra, rc);
   }
-  if (res.status === 401 || res.status === 403) return fromCache("unauthorized", `OpenSky a refusé l'accès (${res.status}).`, null);
-  if (!res.ok) return fromCache("unavailable", `Service OpenSky indisponible (${res.status}).`, null);
+  if (res.status === 401 || res.status === 403) return fromCache("unauthorized", `OpenSky a refusé l'accès (${res.status}).`, null, rc);
+  if (!res.ok) return fromCache("unavailable", `Service OpenSky indisponible (${res.status}).`, null, rc);
   let body: { time?: number; states?: unknown[][] | null };
-  try { body = await res.json(); } catch { return fromCache("invalid", "Réponse OpenSky illisible.", null); }
-  if (typeof body?.time !== "number") return fromCache("invalid", "Réponse OpenSky invalide.", null);
+  try { body = await res.json(); } catch { return fromCache("invalid", "Réponse OpenSky illisible.", null, rc); }
+  if (typeof body?.time !== "number") return fromCache("invalid", "Réponse OpenSky invalide.", null, rc);
 
   const aircraft: AircraftTuple[] = (body.states ?? []).filter((s) => Array.isArray(s) && typeof s[0] === "string").map((s) => [
     s[0] as string, String(s[1] ?? "").trim(), String(s[2] ?? ""), Number(s[4] ?? 0),
@@ -99,25 +129,37 @@ async function fetchStates(): Promise<RadarResponse> {
 
   return {
     status: "ok", message: null, aircraft, dataTime: body.time, fetchedAt: Date.now(), latencyMs,
-    cached: false, retryAfterSec: null, authenticated: !!headers.Authorization, persisted,
+    cached: false, retryAfterSec: null, authenticated: !!headers["Authorization"], persisted,
   };
 }
 
-export const getRadarStates = createServerFn({ method: "GET" }).handler(async (): Promise<RadarResponse> => {
+export const getRadarStates = createServerFn({ method: "GET" })
+  .inputValidator((d: unknown) => z.object({ region: z.enum(Object.keys(RADAR_REGIONS) as [RadarRegion, ...RadarRegion[]]).default("world") }).parse(d ?? {}))
+  .handler(async ({ data }): Promise<RadarResponse> => {
   const now = Date.now();
-  if (now < cache.blockedUntil) {
-    return fromCache("rate_limited", "Limite OpenSky atteinte, nouvelle tentative plus tard.", Math.ceil((cache.blockedUntil - now) / 1000));
+  cache = regionCache(data.region);
+  const authed = !!(process.env["OPENSKY_CLIENT_ID"] && process.env["OPENSKY_CLIENT_SECRET"]);
+  const ttl = authed ? 30_000 : 60_000;
+  if (now < limiter.blockedUntil) {
+    return fromCache("rate_limited", "Limite OpenSky atteinte, nouvelle tentative plus tard.", Math.ceil((limiter.blockedUntil - now) / 1000));
   }
-  if (cache.last && cache.last.fetchedAt && now - cache.last.fetchedAt < STATES_TTL_MS) {
+  if (cache.last && cache.last.fetchedAt && now - cache.last.fetchedAt < ttl) {
     return { ...cache.last, cached: true, persisted: "skipped" };
   }
-  if (!cache.inflight) {
-    cache.inflight = fetchStates().then((r) => {
-      if (r.status === "ok") cache.last = r;
-      return r;
-    }).finally(() => { cache.inflight = null; });
+  const day = new Date().toISOString().slice(0, 10);
+  if (limiter.day !== day) { limiter.day = day; limiter.calls = 0; }
+  if (!cache.inflight && limiter.calls >= (authed ? DAILY_BUDGET_AUTH : DAILY_BUDGET_ANON)) {
+    return fromCache("rate_limited", "Budget quotidien SAO de requêtes OpenSky atteint.", 3600);
   }
-  return cache.inflight;
+  if (!cache.inflight) {
+    limiter.calls++;
+    const c = cache;
+    c.inflight = fetchStates(data.region).then((r) => {
+      if (r.status === "ok") c.last = r;
+      return r;
+    }).finally(() => { c.inflight = null; });
+  }
+  return cache.inflight!;
 });
 
 export type FlightDetails = { status: RadarStatus; message: string | null; origin: string | null; destination: string | null; firstSeen: number | null; lastSeen: number | null };

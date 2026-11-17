@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Radar } from "lucide-react";
 import { PageShell, Section } from "@/components/sao/PageShell";
+import { RadarTabs } from "@/components/sao/RadarTabs";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import asie from "@/assets/dest-asie.jpg";
@@ -66,6 +67,7 @@ function HistoryPage() {
   return (
     <PageShell kicker="Radar SAO" title="Vols historiques" intro="Historique des vols observés par le radar SAO — uniquement les aéronefs reçus pendant que le radar était consulté. Ce n'est pas un historique mondial complet." image={asie} imageAlt="Centre logistique">
       <Section>
+        <RadarTabs />
         <div className="flex flex-wrap items-end gap-3 rounded-lg border border-border bg-background p-4 shadow-sm">
           <label className="text-xs font-semibold">Date (UTC)
             <input type="date" value={date} max={new Date().toISOString().slice(0, 10)} onChange={(e) => setDate(e.target.value)} className="mt-1 block rounded-md border border-border px-3 py-2 text-sm" />
@@ -73,7 +75,7 @@ function HistoryPage() {
           <label className="text-xs font-semibold">ICAO24 ou indicatif
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ex. 3c6444 ou AFR" className="mt-1 block rounded-md border border-border px-3 py-2 text-sm" />
           </label>
-          <Link to="/suivi" className="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-sao-navy hover:underline"><Radar className="size-4" aria-hidden="true" /> Retour au radar</Link>
+          <Link to="/radar" className="ml-auto inline-flex items-center gap-2 text-sm font-semibold text-sao-navy hover:underline"><Radar className="size-4" aria-hidden="true" /> Retour au radar</Link>
         </div>
         <p className="mt-4 text-sm" role="status">{loading ? "Chargement…" : error ?? `${count.toLocaleString("fr-FR")} sessions de vol observées par SAO ce jour-là.`}</p>
         <div className="mt-3 overflow-x-auto rounded-lg border border-border bg-background">

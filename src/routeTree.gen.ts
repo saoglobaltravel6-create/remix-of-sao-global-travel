@@ -22,6 +22,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EspaceClientRouteImport } from './routes/espace-client'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
+import { Route as RadarRouteImport } from './routes/radar'
 import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as SaomoneyRouteImport } from './routes/saomoney'
 import { Route as SejoursRouteImport } from './routes/sejours'
@@ -29,6 +30,8 @@ import { Route as SolutionsProRouteImport } from './routes/solutions-pro'
 import { Route as SuiviRouteImport } from './routes/suivi'
 import { Route as VolsRouteImport } from './routes/vols'
 import { Route as VolsHistoriquesRouteImport } from './routes/vols-historiques'
+import { Route as RadarIndexRouteImport } from './routes/radar.index'
+import { Route as RadarStatistiquesRouteImport } from './routes/radar.statistiques'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -95,6 +98,11 @@ const PartenairesRoute = PartenairesRouteImport.update({
   path: '/partenaires',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RadarRoute = RadarRouteImport.update({
+  id: '/radar',
+  path: '/radar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReservationRoute = ReservationRouteImport.update({
   id: '/reservation',
   path: '/reservation',
@@ -130,6 +138,16 @@ const VolsHistoriquesRoute = VolsHistoriquesRouteImport.update({
   path: '/vols-historiques',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RadarIndexRoute = RadarIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RadarRoute,
+} as any)
+const RadarStatistiquesRoute = RadarStatistiquesRouteImport.update({
+  id: '/statistiques',
+  path: '/statistiques',
+  getParentRoute: () => RadarRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
+  '/radar': typeof RadarRouteWithChildren
   '/reservation': typeof ReservationRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
@@ -152,6 +171,8 @@ export interface FileRoutesByFullPath {
   '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
   '/vols-historiques': typeof VolsHistoriquesRoute
+  '/radar/statistiques': typeof RadarStatistiquesRoute
+  '/radar/': typeof RadarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -174,6 +195,8 @@ export interface FileRoutesByTo {
   '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
   '/vols-historiques': typeof VolsHistoriquesRoute
+  '/radar/statistiques': typeof RadarStatistiquesRoute
+  '/radar': typeof RadarIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -190,6 +213,7 @@ export interface FileRoutesById {
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
+  '/radar': typeof RadarRouteWithChildren
   '/reservation': typeof ReservationRoute
   '/saomoney': typeof SaomoneyRoute
   '/sejours': typeof SejoursRoute
@@ -197,6 +221,8 @@ export interface FileRoutesById {
   '/suivi': typeof SuiviRoute
   '/vols': typeof VolsRoute
   '/vols-historiques': typeof VolsHistoriquesRoute
+  '/radar/statistiques': typeof RadarStatistiquesRoute
+  '/radar/': typeof RadarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -214,6 +240,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
+    | '/radar'
     | '/reservation'
     | '/saomoney'
     | '/sejours'
@@ -221,6 +248,8 @@ export interface FileRouteTypes {
     | '/suivi'
     | '/vols'
     | '/vols-historiques'
+    | '/radar/statistiques'
+    | '/radar/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,6 +272,8 @@ export interface FileRouteTypes {
     | '/suivi'
     | '/vols'
     | '/vols-historiques'
+    | '/radar/statistiques'
+    | '/radar'
   id:
     | '__root__'
     | '/'
@@ -258,6 +289,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
+    | '/radar'
     | '/reservation'
     | '/saomoney'
     | '/sejours'
@@ -265,6 +297,8 @@ export interface FileRouteTypes {
     | '/suivi'
     | '/vols'
     | '/vols-historiques'
+    | '/radar/statistiques'
+    | '/radar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -281,6 +315,7 @@ export interface RootRouteChildren {
   DestinationsRoute: typeof DestinationsRoute
   EspaceClientRoute: typeof EspaceClientRoute
   PartenairesRoute: typeof PartenairesRoute
+  RadarRoute: typeof RadarRouteWithChildren
   ReservationRoute: typeof ReservationRoute
   SaomoneyRoute: typeof SaomoneyRoute
   SejoursRoute: typeof SejoursRoute
@@ -383,6 +418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartenairesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/radar': {
+      id: '/radar'
+      path: '/radar'
+      fullPath: '/radar'
+      preLoaderRoute: typeof RadarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reservation': {
       id: '/reservation'
       path: '/reservation'
@@ -432,8 +474,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VolsHistoriquesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/radar/': {
+      id: '/radar/'
+      path: '/'
+      fullPath: '/radar/'
+      preLoaderRoute: typeof RadarIndexRouteImport
+      parentRoute: typeof RadarRoute
+    }
+    '/radar/statistiques': {
+      id: '/radar/statistiques'
+      path: '/statistiques'
+      fullPath: '/radar/statistiques'
+      preLoaderRoute: typeof RadarStatistiquesRouteImport
+      parentRoute: typeof RadarRoute
+    }
   }
 }
+
+interface RadarRouteChildren {
+  RadarStatistiquesRoute: typeof RadarStatistiquesRoute
+  RadarIndexRoute: typeof RadarIndexRoute
+}
+
+const RadarRouteChildren: RadarRouteChildren = {
+  RadarStatistiquesRoute: RadarStatistiquesRoute,
+  RadarIndexRoute: RadarIndexRoute,
+}
+
+const RadarRouteWithChildren = RadarRoute._addFileChildren(RadarRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -449,6 +517,7 @@ const rootRouteChildren: RootRouteChildren = {
   DestinationsRoute: DestinationsRoute,
   EspaceClientRoute: EspaceClientRoute,
   PartenairesRoute: PartenairesRoute,
+  RadarRoute: RadarRouteWithChildren,
   ReservationRoute: ReservationRoute,
   SaomoneyRoute: SaomoneyRoute,
   SejoursRoute: SejoursRoute,

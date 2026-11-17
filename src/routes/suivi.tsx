@@ -5,7 +5,6 @@ import { PageShell, Section, DemoNote, CtaBand } from "@/components/sao/PageShel
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import asie from "@/assets/dest-asie.jpg";
-import { FlightRadar } from "@/components/sao/FlightRadar";
 
 export const Route = createFileRoute("/suivi")({
   head: () => ({
@@ -83,7 +82,10 @@ function SuiviPage() {
       imageAlt="Centre logistique"
     >
       <Section>
-        <FlightRadar />
+        <Link to="/radar" className="sao-card flex items-center justify-between gap-4 p-6 font-semibold text-sao-navy hover:text-sao-red">
+          <span>Le radar aérien a sa propre page : carte en direct, statistiques et vols observés.</span>
+          <span aria-hidden="true">Ouvrir le radar →</span>
+        </Link>
       </Section>
       <Section title="Rechercher un envoi">
         <form className="sao-card flex flex-col gap-3 p-6 sm:flex-row" onSubmit={search}>
