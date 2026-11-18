@@ -13,5 +13,5 @@
 - [ ] Finaliser Contact et préparer l’envoi réel, bloqué par la validation du domaine
 - [ ] Vérifier métadonnées, erreurs d’exécution et affichage final
 
-- [ ] Adapt Krung Travel cinematic design to SAO (SAO colours/logos/destinations, no invented hotels or prices) — waiting: which page
-- [ ] Radar: dedicated /radar pages, stats, authenticated OpenSky, region cache + clustering
+- [x] Krung Travel style adapted to SAO as /decouvrir
+- [x] Radar: dedicated pages, stats, auth, region cache, clustering (live OpenSky unreachable from sandbox)

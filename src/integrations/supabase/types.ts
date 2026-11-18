@@ -104,6 +104,36 @@ export type Database = {
         }
         Relationships: []
       }
+      radar_requests: {
+        Row: {
+          aircraft_count: number
+          authenticated: boolean
+          id: number
+          latency_ms: number | null
+          region: string
+          requested_at: string
+          status: string
+        }
+        Insert: {
+          aircraft_count?: number
+          authenticated?: boolean
+          id?: never
+          latency_ms?: number | null
+          region: string
+          requested_at?: string
+          status: string
+        }
+        Update: {
+          aircraft_count?: number
+          authenticated?: boolean
+          id?: never
+          latency_ms?: number | null
+          region?: string
+          requested_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
       service_requests: {
         Row: {
           created_at: string
@@ -296,6 +326,20 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      radar_monthly_stats: {
+        Args: never
+        Returns: {
+          avg_interval_sec: number
+          avg_latency_ms: number
+          distinct_aircraft: number
+          errors: number
+          month: string
+          rate_limited: number
+          requests: number
+          success_rate: number
+          successes: number
+        }[]
       }
       record_observed_flights: { Args: { _states: Json }; Returns: number }
     }

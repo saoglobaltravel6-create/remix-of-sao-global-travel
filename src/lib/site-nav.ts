@@ -52,6 +52,7 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: "DÉCOUVRIR",
     items: [
+      { label: "Découvrir le monde", to: "/decouvrir", desc: "Entrée cinématique vers nos destinations.", icon: Palmtree },
       { label: "Séjours", to: "/sejours", desc: "Formules complètes, vol + hébergement.", icon: Palmtree },
       { label: "Circuits", to: "/circuits", desc: "Itinéraires guidés au Tchad et ailleurs.", icon: MapIcon },
       { label: "SAO Money", to: "/saomoney", desc: "Transferts et portefeuille SAO.", icon: CircleDollarSign },

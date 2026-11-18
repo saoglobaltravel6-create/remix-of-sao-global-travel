@@ -19,6 +19,7 @@ import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as ColisRouteImport } from './routes/colis'
 import { Route as ConnexionRouteImport } from './routes/connexion'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DecouvrirRouteImport } from './routes/decouvrir'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EspaceClientRouteImport } from './routes/espace-client'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
@@ -81,6 +82,11 @@ const ConnexionRoute = ConnexionRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DecouvrirRoute = DecouvrirRouteImport.update({
+  id: '/decouvrir',
+  path: '/decouvrir',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinationsRoute = DestinationsRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
   '/contact': typeof ContactRoute
+  '/decouvrir': typeof DecouvrirRoute
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
   '/contact': typeof ContactRoute
+  '/decouvrir': typeof DecouvrirRoute
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/colis': typeof ColisRoute
   '/connexion': typeof ConnexionRoute
   '/contact': typeof ContactRoute
+  '/decouvrir': typeof DecouvrirRoute
   '/destinations': typeof DestinationsRoute
   '/espace-client': typeof EspaceClientRoute
   '/partenaires': typeof PartenairesRoute
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/colis'
     | '/connexion'
     | '/contact'
+    | '/decouvrir'
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/colis'
     | '/connexion'
     | '/contact'
+    | '/decouvrir'
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/colis'
     | '/connexion'
     | '/contact'
+    | '/decouvrir'
     | '/destinations'
     | '/espace-client'
     | '/partenaires'
@@ -312,6 +324,7 @@ export interface RootRouteChildren {
   ColisRoute: typeof ColisRoute
   ConnexionRoute: typeof ConnexionRoute
   ContactRoute: typeof ContactRoute
+  DecouvrirRoute: typeof DecouvrirRoute
   DestinationsRoute: typeof DestinationsRoute
   EspaceClientRoute: typeof EspaceClientRoute
   PartenairesRoute: typeof PartenairesRoute
@@ -395,6 +408,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/decouvrir': {
+      id: '/decouvrir'
+      path: '/decouvrir'
+      fullPath: '/decouvrir'
+      preLoaderRoute: typeof DecouvrirRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destinations': {
@@ -514,6 +534,7 @@ const rootRouteChildren: RootRouteChildren = {
   ColisRoute: ColisRoute,
   ConnexionRoute: ConnexionRoute,
   ContactRoute: ContactRoute,
+  DecouvrirRoute: DecouvrirRoute,
   DestinationsRoute: DestinationsRoute,
   EspaceClientRoute: EspaceClientRoute,
   PartenairesRoute: PartenairesRoute,
